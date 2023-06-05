@@ -37,7 +37,7 @@ void main() {
 
       expect(
         // H:MM:SS.mmmmmm
-        find.textContaining(RegExp(r'Next reset in \d:\d{2}:\d{2}.\d{6}')),
+        find.textContaining(RegExp(r'Next reset in \d:\d{2}:\d{2}')),
         findsOneWidget,
       );
     });

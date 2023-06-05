@@ -14,7 +14,9 @@ class NextResetCountdown extends StatelessWidget {
       );
     }
     final diff = snapshot.data!.nextReset.difference(DateTime.now());
-    final next = diff.inDays <= 1 ? diff.toString() : "${diff.inDays} days";
+    final next = diff.inDays <= 1
+        ? diff.toString().split(RegExp(r'\.\d+$')).first
+        : "${diff.inDays} days";
     return Center(child: Text("Next reset in $next"));
   }
 }
