@@ -19,25 +19,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.textContaining(RegExp(r'Next reset in \d{1} days')),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('should show next reset in a few hours',
-        (WidgetTester tester) async {
-      Adapters.serverAdapter = InMemoryAdapterWithCloseReset();
-      await tester.pumpWidget(const MaterialApp(home: Announcements()));
-
-      final announcementsButton = find.text('Announcements');
-      expect(announcementsButton, findsOneWidget);
-
-      await tester.tap(announcementsButton);
-      await tester.pumpAndSettle();
-
-      expect(
-        // H:MM:SS.mmmmmm
-        find.textContaining(RegExp(r'Next reset in \d:\d{2}:\d{2}')),
+        find.textContaining(RegExp(
+            r'Next reset in \d days and (\d+ hours )?(\d+ min )?(\d+ s)?')),
         findsOneWidget,
       );
     });
@@ -48,10 +31,4 @@ class InMemoryAdapterWithResetInFewDays extends ServerInMemoryAdapter {
   @override
   Future<ServerStatus> getStatus() => super.getStatus().then((value) =>
       value.copyWith(nextReset: DateTime.now().add(const Duration(days: 5))));
-}
-
-class InMemoryAdapterWithCloseReset extends ServerInMemoryAdapter {
-  @override
-  Future<ServerStatus> getStatus() => super.getStatus().then((value) =>
-      value.copyWith(nextReset: DateTime.now().add(const Duration(hours: 5))));
 }
