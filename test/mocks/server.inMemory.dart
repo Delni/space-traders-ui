@@ -1,12 +1,16 @@
-import 'package:space_traders/domain/server-status/announcement.dart';
-import 'package:space_traders/domain/server-status/repository.dart';
+import 'package:space_traders/domain/server_status.dart';
 
 class ServerInMemoryAdapter implements ServerRepository {
   @override
-  Future<List<Annoucement>> getStatus() => Future.value([
-        Annoucement(
-          title: "Test Announcement",
-          body: "Officia et est aliqua adipisicing.",
-        )
-      ]);
+  Future<ServerStatus> getStatus() => Future.value(
+        ServerStatus(
+          nextReset: DateTime.parse("2023-06-05T16:00:00.000Z"),
+          annoucements: [
+            Annoucement(
+              title: "Test Announcement",
+              body: "Officia et est aliqua adipisicing.",
+            )
+          ],
+        ),
+      );
 }

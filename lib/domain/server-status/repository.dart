@@ -1,5 +1,6 @@
-import 'announcement.dart';
+import 'status.dart';
+
 
 abstract class ServerRepository {
-  Future<Iterable<Annoucement>> getStatus();
+  Future<ServerStatus> getStatus();
 }
