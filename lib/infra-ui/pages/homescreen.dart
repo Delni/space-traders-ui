@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:space_traders/infra-ui/pages/home/login.dart';
 
 import 'annoucements/announcements.dart';
 
@@ -10,9 +11,20 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const Center(child: Text("Space Traders")),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  "Space Traders",
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+              ),
+              Login()
+            ],
+          ),
           Positioned(
-            bottom: 0,
+            bottom: MediaQuery.of(context).size.height * .025,
             width: MediaQuery.of(context).size.width,
             child: Center(
               child: TextButton(

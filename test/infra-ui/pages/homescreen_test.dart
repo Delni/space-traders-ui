@@ -13,6 +13,12 @@ void main() {
       expect(find.text('Space Traders'), findsOneWidget);
     });
 
+    testWidgets('should allow to login', (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+
+      expect(find.text("Enter your token to connect"), findsOneWidget);
+    });
+
     testWidgets('should show announcements', (WidgetTester tester) async {
       Adapters.serverAdapter = ServerInMemoryAdapter();
       await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
