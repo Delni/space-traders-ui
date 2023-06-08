@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
 
-class Login extends StatelessWidget {
+class LoginField extends StatelessWidget {
   final TextEditingController controller = TextEditingController();
 
-  Login({super.key});
+  LoginField({super.key});
 
   void saveToken() => Adapters.saveTokenAdapter(controller.text);
 

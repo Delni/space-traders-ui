@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:space_traders/domain/server_status.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
-import 'package:space_traders/infra-ui/pages/annoucements/announcements.dart';
+import 'package:space_traders/infra-ui/pages/login/annoucements/announcements.dart';
 
-import '../../../mocks/server.inMemory.dart';
+import '../../../../mocks/server.inMemory.dart';
 
 void main() {
   group("Annoucements", () {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:space_traders/infra-ui/pages/home/login.dart';
+import 'package:space_traders/infra-ui/pages/login/login_field.dart';
 
 import 'annoucements/announcements.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
-              Login()
+              LoginField()
             ],
           ),
           Positioned(
