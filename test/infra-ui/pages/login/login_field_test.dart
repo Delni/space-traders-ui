@@ -93,6 +93,24 @@ void main() {
         expect(find.byType(HomePage), findsNothing);
         expect(find.textContaining(errorMessage), findsOneWidget);
       });
+
+      testWidgets("it should reset failure error on change", (tester) async {
+        // Given
+        String errorMessage = "Invalid token";
+        Adapters.agentAdapter = InMemoryAgentAdapterThatThrow(errorMessage);
+        await tester.pumpWidget(const TestApp(
+          testing: Material(child: LoginField()),
+        ));
+        await login(tester);
+
+        expect(find.textContaining(errorMessage), findsOneWidget);
+        // When
+        final tokenInput = find.byType(TextField);
+        await tester.enterText(tokenInput, "My other great token");
+        await tester.pump();
+
+        expect(find.textContaining(errorMessage), findsNothing);
+      });
     });
   });
 }

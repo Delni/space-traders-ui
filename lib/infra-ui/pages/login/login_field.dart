@@ -18,9 +18,6 @@ class _LoginFieldState extends State<LoginField> {
     Adapters.saveTokenAdapter(controller.text);
     Adapters.agentAdapter
         .getMe()
-        .then((value) => setState(() {
-              errorMessage = null;
-            }))
         .then((value) => Navigator.of(context).pushReplacementNamed("/home"))
         .catchError((error) {
       setState(() {
@@ -46,7 +43,10 @@ class _LoginFieldState extends State<LoginField> {
               ),
               controller: controller,
               textInputAction: TextInputAction.done,
-              onSubmitted: (value) => saveTokenAndConnect(context),
+              onChanged: (_) => setState(() {
+                errorMessage = null;
+              }),
+              onSubmitted: (_) => saveTokenAndConnect(context),
             ),
           ),
           const SizedBox(width: 12),
