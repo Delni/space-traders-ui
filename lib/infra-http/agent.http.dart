@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:space_traders/domain/agent.dart';
 
 import 'http_client.dart';
@@ -7,9 +8,10 @@ class AgentHttpAdapter extends AgentRepository {
 
   @override
   Future<Agent> getMe() {
-    return httpClient.get("/my/agent").then((value) {
-      final Agent agent = Agent.fromJson(value.data["data"]);
-      return agent;
-    });
+    return httpClient
+        .get("/my/agent")
+        .then(getDataAs<Map<String, dynamic>>)
+        .then(Agent.fromJson)
+        .catchError((error) => throw getErrorMessage(error as DioError));
   }
 }
