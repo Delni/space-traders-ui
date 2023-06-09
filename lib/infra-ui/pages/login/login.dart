@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
-              LoginField()
+              const LoginField()
             ],
           ),
           Positioned(

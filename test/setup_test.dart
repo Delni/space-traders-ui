@@ -5,6 +5,8 @@ import 'package:space_traders/main.dart';
 import 'mocks/agent.inMemory.dart';
 import 'mocks/server.inMemory.dart';
 
+void main() {}
+
 void registerAllInMemoryAdapters() {
   Adapters.saveTokenAdapter = (token) {};
   Adapters.serverAdapter = ServerInMemoryAdapter();

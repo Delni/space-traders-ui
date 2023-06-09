@@ -14,7 +14,7 @@ class Adapters {
     return _instance;
   }
 
-  static const AgentRepository agentAdapter = AgentHttpAdapter();
+  static AgentRepository agentAdapter = const AgentHttpAdapter();
   static const ShipRepository shipAdapter = ShipHttpAdapter();
   static ServerRepository serverAdapter = ServerHttpAdapter();
   static void Function(String) saveTokenAdapter = saveToken;
