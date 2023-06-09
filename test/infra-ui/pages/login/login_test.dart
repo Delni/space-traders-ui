@@ -3,7 +3,7 @@ import 'package:space_traders/infra-ui/adapters.dart';
 import 'package:space_traders/infra-ui/pages/login/login.dart';
 
 import '../../../mocks/server.inMemory.dart';
-import '../../../setup_test.dart';
+import '../../../test_utils.dart';
 
 void main() {
   setUp(registerAllInMemoryAdapters);

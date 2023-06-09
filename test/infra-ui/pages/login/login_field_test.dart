@@ -6,7 +6,7 @@ import 'package:space_traders/infra-ui/pages/home/home.dart';
 import 'package:space_traders/infra-ui/pages/login/login_field.dart';
 
 import '../../../mocks/agent.inMemory.dart';
-import '../../../setup_test.dart';
+import '../../../test_utils.dart';
 
 void main() {
   setUp(registerAllInMemoryAdapters);
