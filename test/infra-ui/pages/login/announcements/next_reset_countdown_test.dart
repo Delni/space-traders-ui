@@ -1,16 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:space_traders/domain/server_status.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
 import 'package:space_traders/infra-ui/pages/login/annoucements/announcements.dart';
 
 import '../../../../mocks/server.inMemory.dart';
+import '../../../../setup_test.dart';
 
 void main() {
+  setUp(registerAllInMemoryAdapters);
   group("Annoucements", () {
     testWidgets('should show next reset', (WidgetTester tester) async {
       Adapters.serverAdapter = InMemoryAdapterWithResetInFewDays();
-      await tester.pumpWidget(const MaterialApp(home: Announcements()));
+      await tester.pumpWidget(const TestApp(testing: Announcements()));
 
       final announcementsButton = find.text('Announcements');
       expect(announcementsButton, findsOneWidget);
