@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
+import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 
 class LoginField extends StatefulWidget {
   const LoginField({super.key});
@@ -16,7 +18,7 @@ class _LoginFieldState extends State<LoginField> {
 
   void saveTokenAndConnect(BuildContext context) {
     Adapters.saveTokenAdapter(controller.text);
-    Adapters.agentAdapter
+    Provider.of<AgentProvider>(context, listen: false)
         .getMe()
         .then((value) => Navigator.of(context).pushReplacementNamed("/home"))
         .catchError((error) {

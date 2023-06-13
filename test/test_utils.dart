@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
+import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/main.dart';
 
 import 'mocks/agent.inMemory.dart';
@@ -18,9 +20,12 @@ class TestApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: testing,
-      routes: routes,
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => AgentProvider())],
+      child: MaterialApp(
+        home: testing,
+        routes: routes,
+      ),
     );
   }
 }
