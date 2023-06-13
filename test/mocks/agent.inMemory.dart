@@ -6,6 +6,6 @@ class AgentInMemoryAdapter implements AgentRepository {
         accountId: "accountId",
         credits: 0,
         headquarters: "HQ",
-        symbol: "symbol",
+        symbol: "Starlord",
       ));
 }
