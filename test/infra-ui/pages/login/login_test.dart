@@ -20,6 +20,13 @@ void main() {
       expect(find.text("Enter your token to connect"), findsOneWidget);
     });
 
+    testWidgets('should allow to create an account',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const TestApp(testing: LoginPage()));
+
+      expect(find.text("No token? Create an account here"), findsOneWidget);
+    });
+
     testWidgets('should show announcements', (WidgetTester tester) async {
       Adapters.serverAdapter = ServerInMemoryAdapter();
       await tester.pumpWidget(const TestApp(testing: LoginPage()));

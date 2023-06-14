@@ -1,3 +1,4 @@
+import 'package:space_traders/domain/faction.dart';
 import 'package:space_traders/domain/server_status.dart';
 
 class ServerInMemoryAdapter implements ServerRepository {
@@ -13,4 +14,8 @@ class ServerInMemoryAdapter implements ServerRepository {
           ],
         ),
       );
+
+  @override
+  Future<String> register(String agentName, Faction faction) =>
+      Future.value("token");
 }

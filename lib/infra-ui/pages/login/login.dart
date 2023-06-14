@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:space_traders/infra-ui/pages/login/login_field.dart';
+import 'package:space_traders/infra-ui/pages/login/sign_up.dart';
 
 import 'annoucements/announcements.dart';
 
@@ -20,7 +21,8 @@ class LoginPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
-              const LoginField()
+              const LoginField(),
+              const SignUp(),
             ],
           ),
           Positioned(

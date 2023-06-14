@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:space_traders/domain/faction.dart';
 import 'package:space_traders/domain/server_status.dart';
 
 class ServerHttpAdapter implements ServerRepository {
@@ -15,4 +16,10 @@ class ServerHttpAdapter implements ServerRepository {
                 List<Map<String, dynamic>>.from(value["announcements"])
                     .map(Annoucement.fromJson),
           ));
+
+  @override
+  Future<String> register(String agentName, Faction faction) {
+    // TODO: implement register
+    throw UnimplementedError();
+  }
 }
