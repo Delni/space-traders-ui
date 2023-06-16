@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:space_traders/domain/agent.dart';
 import 'package:space_traders/domain/faction.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
 
@@ -12,6 +13,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final agentController = TextEditingController();
+  bool hasError = false;
   String? token;
   bool isLoading = false;
   Faction faction = Faction.cosmic;
@@ -70,9 +72,10 @@ class _SignUpFormState extends State<SignUpForm> {
         children: [
           TextField(
             controller: agentController,
-            decoration: const InputDecoration(
-              label: Text("Agent's name"),
-            ),
+            decoration: InputDecoration(
+                label: const Text("Agent's name"),
+                errorText:
+                    hasError ? 'Name already claimed. Try another.' : null),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -105,12 +108,17 @@ class _SignUpFormState extends State<SignUpForm> {
                   onPressed: () {
                     setState(() {
                       isLoading = true;
+                      hasError = false;
                     });
                     Adapters.serverAdapter
                         .register(agentController.text, faction)
                         .then((value) => setState(() {
                               isLoading = false;
                               token = value;
+                            }))
+                        .catchError((error) => setState(() {
+                              isLoading = false;
+                              hasError = error is AgentSymbolAlreadyClaimed;
                             }));
                   },
                   child: isLoading

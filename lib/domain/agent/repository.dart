@@ -5,3 +5,5 @@ abstract class AgentRepository {
   
   Future<Agent> getMe();
 }
+
+class AgentSymbolAlreadyClaimed implements Exception {}
