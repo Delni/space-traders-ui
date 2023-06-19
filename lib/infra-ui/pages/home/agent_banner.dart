@@ -12,8 +12,10 @@ class AgentBanner extends StatelessWidget {
       shape: const BeveledRectangleBorder(
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(12)),
       ),
+      shadowColor: Colors.blue,
       child: ListTile(
         title: Text("Greetings ${agent.symbol}"),
+        subtitle: Text(agent.headquarters),
         trailing: Text("${agent.credits}c"),
       ),
     );
