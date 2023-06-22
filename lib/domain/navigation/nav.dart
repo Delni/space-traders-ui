@@ -3,14 +3,14 @@ import 'package:space_traders/domain/ship/ship_status.dart';
 
 import 'route.dart';
 
-class Nav {
+class ShipNav {
     final String systemSymbol;
     final String waypointSymbol;
     final Route route;
     final ShipStatus status;
     final FlightMode flightMode;
 
-    Nav({
+  ShipNav({
         required this.systemSymbol,
         required this.waypointSymbol,
         required this.route,
@@ -18,7 +18,7 @@ class Nav {
         required this.flightMode,
     });
 
-    factory Nav.fromJson(Map<String, dynamic> json) => Nav(
+  factory ShipNav.fromJson(Map<String, dynamic> json) => ShipNav(
         systemSymbol: json["systemSymbol"],
         waypointSymbol: json["waypointSymbol"],
         route: Route.fromJson(json["route"]),

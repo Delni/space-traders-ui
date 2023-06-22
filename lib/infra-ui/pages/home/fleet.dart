@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:space_traders/infra-ui/pages/home/ship_summary.dart';
+import 'package:space_traders/infra-ui/pages/ship/ship_summary.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 
 class Fleet extends StatelessWidget {

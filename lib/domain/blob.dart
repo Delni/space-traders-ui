@@ -1,3 +1,5 @@
+import 'ship/engine_requirements.dart';
+
 class Crew {
     final int current;
     final int capacity;
@@ -40,7 +42,7 @@ class Engine {
     final String description;
     final int condition;
     final int speed;
-    final EngineRequirements requirements;
+  final EngineRequirements requirements;
 
     Engine({
         required this.symbol,
@@ -66,70 +68,6 @@ class Engine {
         "description": description,
         "condition": condition,
         "speed": speed,
-        "requirements": requirements.toJson(),
-    };
-}
-
-class EngineRequirements {
-    final int power;
-    final int crew;
-
-    EngineRequirements({
-        required this.power,
-        required this.crew,
-    });
-
-    factory EngineRequirements.fromJson(Map<String, dynamic> json) => EngineRequirements(
-        power: json["power"],
-        crew: json["crew"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "power": power,
-        "crew": crew,
-    };
-}
-
-class Frame {
-    final String symbol;
-    final String name;
-    final String description;
-    final int moduleSlots;
-    final int mountingPoints;
-    final int fuelCapacity;
-    final int condition;
-    final EngineRequirements requirements;
-
-    Frame({
-        required this.symbol,
-        required this.name,
-        required this.description,
-        required this.moduleSlots,
-        required this.mountingPoints,
-        required this.fuelCapacity,
-        required this.condition,
-        required this.requirements,
-    });
-
-    factory Frame.fromJson(Map<String, dynamic> json) => Frame(
-        symbol: json["symbol"],
-        name: json["name"],
-        description: json["description"],
-        moduleSlots: json["moduleSlots"],
-        mountingPoints: json["mountingPoints"],
-        fuelCapacity: json["fuelCapacity"],
-        condition: json["condition"],
-        requirements: EngineRequirements.fromJson(json["requirements"]),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "symbol": symbol,
-        "name": name,
-        "description": description,
-        "moduleSlots": moduleSlots,
-        "mountingPoints": mountingPoints,
-        "fuelCapacity": fuelCapacity,
-        "condition": condition,
         "requirements": requirements.toJson(),
     };
 }
@@ -243,7 +181,7 @@ class Mount {
     final String name;
     final String description;
     final int strength;
-    final EngineRequirements requirements;
+  final EngineRequirements requirements;
     final List<String>? deposits;
 
     Mount({

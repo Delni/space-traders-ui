@@ -1,3 +1,4 @@
+import 'package:space_traders/domain/navigation/nav.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/domain/transaction/transaction_result.dart';
 import 'package:space_traders/infra-http/http_client.dart';
@@ -27,4 +28,15 @@ class ShipHttpAdapter extends ShipRepository {
       httpClient
           .post("/my/ships/${ship.symbol}/sell", data: goods.toJson())
           .then((value) => TransactionResult.fromJson(value.data['data']));
+
+  @override
+  Future<ShipNav> orbitOrDock({
+    required Ship ship,
+    required String waypointSymbol,
+    required ShipStatus to,
+  }) =>
+      httpClient.post(
+        "/my/ships/${ship.symbol}/${to == ShipStatus.docked ? 'dock' : 'orbit'}",
+        data: {"waypointSymbol": waypointSymbol},
+      ).then((value) => ShipNav.fromJson(value.data['data']['nav']));
 }
