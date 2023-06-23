@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/domain/ship.dart';
@@ -57,7 +59,8 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
                       SizedBox(
                         width: 50.0,
                         child: LinearProgressIndicator(
-                          value: ship.cargo.units / ship.cargo.capacity,
+                          value:
+                              ship.cargo.units / (max(ship.cargo.capacity, 1)),
                         ),
                       ),
                     ],
@@ -72,6 +75,10 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
           ship: ship,
           onDock: () => provider.orbitOrDock(ship),
           onOrbit: () => provider.orbitOrDock(ship),
+          onNavigate: () => showBottomSystemNavigationMap(
+            context,
+            ship.nav.systemSymbol,
+          ).then((value) => print(value.toString())),
         ),
       );
     });
