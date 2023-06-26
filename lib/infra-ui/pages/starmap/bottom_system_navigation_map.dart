@@ -10,15 +10,19 @@ import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 import 'system_map.dart';
 
 Future<NavPoint?> showBottomSystemNavigationMap(
-        BuildContext context, String systemSymbol) =>
+  BuildContext context,
+  String systemSymbol,
+) =>
     showModalBottomSheet<NavPoint>(
       context: context,
       builder: (context) =>
           Consumer<StarMapProvider>(builder: (context, provider, _) {
-        return SystemNavigationMap(
-          futureSystem: provider.get(systemSymbol),
-          onNavigate: (navpoint) => Navigator.of(context).pop(navpoint),
-        );
+        return Builder(builder: (context) {
+          return SystemNavigationMap(
+            futureSystem: provider.get(systemSymbol),
+            onNavigate: (navpoint) => Navigator.of(context).pop(navpoint),
+          );
+        });
       }),
     );
 
@@ -37,6 +41,7 @@ class SystemNavigationMap extends StatefulWidget {
 }
 
 class _SystemNavigationMapState extends State<SystemNavigationMap> {
+  System? system;
   late Timer timer;
   Matrix4 transform = Matrix4.identity()
     ..rotateX(pi / 2)
@@ -44,60 +49,68 @@ class _SystemNavigationMapState extends State<SystemNavigationMap> {
 
   @override
   void initState() {
-    timer = Timer(const Duration(milliseconds: 200), () {
+    widget.futureSystem.then((value) {
       setState(() {
-        transform = Matrix4.identity()
-          ..rotateX(pi / 3)
-          ..rotateZ(pi / 4);
+        system = value;
+      });
+      timer = Timer(const Duration(milliseconds: 200), () {
+        setState(() {
+          transform = Matrix4.identity()
+            ..rotateX(pi / 3)
+            ..rotateZ(pi / 4);
+        });
       });
     });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: FutureBuilder<System>(
-        future: widget.futureSystem,
-        builder: (BuildContext context, AsyncSnapshot<System> snapshot) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: InteractiveViewer(
-                  maxScale: 10,
-                  child: snapshot.hasData
-                      ? AnimatedContainer(
-                          duration: const Duration(seconds: 2),
-                          curve: Curves.fastEaseInToSlowEaseOut,
-                          transformAlignment: Alignment.center,
-                          transform: transform,
-                          child: SystemMap(
-                            transform: transform,
-                            waypoints: snapshot.data!.waypoints,
-                          ),
-                        )
-                      : const LinearProgressIndicator(),
-                ),
-              ),
-              Text(
-                "System Map",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              if (snapshot.hasData)
-                Expanded(
-                    child: ListView.builder(
-                  itemBuilder: (context, index) => Card(
-                    child: WayPointTile(
-                      waypoint: snapshot.data!.waypoints[index],
-                    ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: InteractiveViewer(
+              maxScale: 10,
+              child: system != null
+                  ? AnimatedContainer(
+                      duration: const Duration(seconds: 2),
+                      curve: Curves.fastEaseInToSlowEaseOut,
+                      transformAlignment: Alignment.center,
+                      transform: transform,
+                      child: SystemMap(
+                        transform: transform,
+                        waypoints: system!.waypoints,
+                      ),
+                    )
+                  : const LinearProgressIndicator(),
+            ),
+          ),
+          Text(
+            "System Map",
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          if (system != null)
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) => Card(
+                  child: WayPointTile(
+                    waypoint: system!.waypoints[index],
                   ),
-                  itemCount: snapshot.data!.waypoints.length,
-                ))
-            ],
-          );
-        },
+                ),
+                itemCount: system!.waypoints.length,
+              ),
+            )
+        ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 }
