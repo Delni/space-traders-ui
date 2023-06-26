@@ -22,7 +22,6 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
   @override
   Widget build(BuildContext context) {
     final shipSymbol = parseRoute(context).ship.symbol;
-
     return Consumer<FleetProvider>(builder: (context, provider, _) {
       final ship = provider.getBySymbol(shipSymbol);
       return Scaffold(
