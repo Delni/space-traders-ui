@@ -38,11 +38,11 @@ class ShipSummary extends StatelessWidget {
         ],
       ShipStatus.inTransit => [
           Text(ship.nav.route.departure.symbol),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Expanded(
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: LinearProgressIndicator(
-                value: durationSinceDepartureTo(DateTime.now()) /
+                value: durationSinceDepartureTo(DateTime.now().toUtc()) /
                     durationSinceDepartureTo(ship.nav.route.arrival),
               ),
             ),

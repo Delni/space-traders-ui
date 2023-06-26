@@ -11,6 +11,10 @@ class ShipCargoItem extends StatelessWidget {
     return ListTile(
       title: Text(item.name),
       subtitle: Text(item.description),
+      trailing: Text(
+        item.units.toString(),
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
     );
   }
 }

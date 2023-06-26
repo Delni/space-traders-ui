@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:space_traders/domain/ship.dart';
+import 'package:space_traders/infra-ui/components/button_with_cooldown.dart';
 
 class ShipActionsBar extends StatelessWidget {
   final Ship ship;
   final void Function()? onOrbit;
   final void Function()? onDock;
   final void Function()? onRefuel;
-  final void Function()? onExtract;
+  final Future<Cooldown> Function()? onExtract;
   final void Function()? onNavigate;
 
   const ShipActionsBar({
@@ -38,12 +39,12 @@ class ShipActionsBar extends StatelessWidget {
           onPressed: ship.nav.status == ShipStatus.docked ? onRefuel : null,
           child: const Text('Refuel'),
         ),
-        ElevatedButton(
+        ButtonWithCoolDown(
           onPressed: onExtract,
           child: const Text('Extract'),
         ),
         ElevatedButton(
-          onPressed: onNavigate,
+          onPressed: ship.nav.status == ShipStatus.inOrbit ? onNavigate : null,
           child: const Text('Navigate'),
         ),
       ],

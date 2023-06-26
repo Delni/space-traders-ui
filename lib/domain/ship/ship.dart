@@ -1,14 +1,15 @@
 import 'package:space_traders/domain/entity.dart';
 import 'package:space_traders/domain/ship/registration.dart';
 
-import '../navigation/nav.dart';
+import '../navigation/ship_nav.dart';
 import 'cargo.dart';
 import 'frame.dart';
+import 'fuel.dart';
 
 class Ship extends Entity {
   final ShipNav nav;
   // final Crew crew;
-  // final Fuel fuel;
+  final Fuel fuel;
   final ShipFrame frame;
   // final Reactor reactor;
   // final Engine engine;
@@ -21,7 +22,7 @@ class Ship extends Entity {
     required super.symbol,
     required this.nav,
     // required this.crew,
-    // required this.fuel,
+    required this.fuel,
     required this.frame,
     // required this.reactor,
     // required this.engine,
@@ -35,7 +36,7 @@ class Ship extends Entity {
         symbol: json["symbol"],
         nav: ShipNav.fromJson(json["nav"]),
         // crew: Crew.fromJson(json["crew"]),
-        // fuel: Fuel.fromJson(json["fuel"]),
+        fuel: Fuel.fromJson(json["fuel"]),
         frame: ShipFrame.fromJson(json["frame"]),
         // reactor: Reactor.fromJson(json["reactor"]),
         // engine: Engine.fromJson(json["engine"]),
@@ -49,7 +50,7 @@ class Ship extends Entity {
         "symbol": symbol,
         "nav": nav.toJson(),
         // "crew": crew.toJson(),
-        // "fuel": fuel.toJson(),
+        "fuel": fuel.toJson(),
         // "frame": frame.toJson(),
         // "reactor": reactor.toJson(),
         // "engine": engine.toJson(),
@@ -63,7 +64,7 @@ class Ship extends Entity {
     String? symbol,
     ShipNav? nav,
     //  Crew? crew,
-    //  Fuel? fuel,
+    Fuel? fuel,
     ShipFrame? frame,
     //  Reactor? reactor,
     //  Engine? engine,
@@ -76,6 +77,7 @@ class Ship extends Entity {
         symbol: symbol ?? this.symbol,
         nav: nav ?? this.nav,
         frame: frame ?? this.frame,
+        fuel: fuel ?? this.fuel,
         registration: registration ?? this.registration,
         cargo: cargo ?? this.cargo,
       );

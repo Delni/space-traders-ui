@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_actions_bar.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_cargo_item.dart';
+import 'package:space_traders/infra-ui/pages/ship/ship_gauge_info.dart';
 import 'package:space_traders/infra-ui/pages/starmap/bottom_system_navigation_map.dart';
+import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 import 'package:space_traders/infra-ui/route_args.mixin.dart';
 
@@ -42,30 +44,15 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
                 Text(ship.nav.waypointSymbol),
               ]),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Cargo",
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("${ship.cargo.units}/${ship.cargo.capacity}"),
-                      SizedBox(
-                        width: 50.0,
-                        child: LinearProgressIndicator(
-                          value:
-                              ship.cargo.units / (max(ship.cargo.capacity, 1)),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+            ShipGaugeInfo(
+              label: "Fuel",
+              units: ship.fuel.current,
+              capacity: ship.fuel.capacity,
+            ),
+            ShipGaugeInfo(
+              label: "Cargo",
+              units: ship.cargo.units,
+              capacity: ship.cargo.capacity,
             ),
             ...ship.cargo.inventory.map((item) => ShipCargoItem(item: item))
           ],
@@ -74,10 +61,19 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
           ship: ship,
           onDock: () => provider.orbitOrDock(ship),
           onOrbit: () => provider.orbitOrDock(ship),
+          onRefuel: () => provider.refuel(ship).then(
+                (value) =>
+                    Provider.of<AgentProvider>(context, listen: false).getMe(),
+              ),
+          onExtract: () => provider.extract(ship),
           onNavigate: () => showBottomSystemNavigationMap(
             context,
             ship.nav.systemSymbol,
-          ).then((value) => print(value.toString())),
+          ).then((value) {
+            if (value != null) {
+              provider.navigateTo(value, ship);
+            }
+          }),
         ),
       );
     });
