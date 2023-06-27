@@ -1,48 +1,54 @@
 class CargoItemSummary {
   final String symbol;
-    final int units;
+  final int units;
 
-    CargoItemSummary({
-        required this.symbol,
-        required this.units,
-    });
+  CargoItemSummary({
+    required this.symbol,
+    required this.units,
+  });
 
-    factory CargoItemSummary.fromJson(Map<String, dynamic> json) => CargoItemSummary(
+  factory CargoItemSummary.fromJson(Map<String, dynamic> json) =>
+      CargoItemSummary(
         symbol: json["symbol"],
         units: json["units"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "symbol": symbol,
         "units": units,
-    };
+      };
 
-    @override
+  @override
   String toString() => "$units of $symbol";
 }
 
-class CargoItem extends CargoItemSummary{
-    final String name;
-    final String description;
+class CargoItem extends CargoItemSummary {
+  final String name;
+  final String description;
 
-    CargoItem({
-        required super.symbol,
-        required this.name,
-        required this.description,
-        required super.units,
-    });
+  CargoItem({
+    required super.symbol,
+    required this.name,
+    required this.description,
+    required super.units,
+  });
 
-    factory CargoItem.fromJson(Map<String, dynamic> json) => CargoItem(
+  factory CargoItem.fromJson(Map<String, dynamic> json) => CargoItem(
         symbol: json["symbol"],
         name: json["name"],
         description: json["description"],
         units: json["units"],
-    );
+      );
 
-    @override
-      Map<String, dynamic> toJson() => {
+  @override
+  Map<String, dynamic> toJson() => {
         ...super.toJson(),
         "name": name,
         "description": description,
-    };
+      };
+
+  CargoItemSummary withUnits(int units) => CargoItemSummary(
+        symbol: symbol,
+        units: units,
+      );
 }

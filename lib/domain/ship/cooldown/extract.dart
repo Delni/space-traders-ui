@@ -1,45 +1,45 @@
 import 'package:space_traders/domain/ship.dart';
 
-class ExtractionResult {
-    final Extraction extraction;
-    final Cooldown cooldown;
-    final Cargo cargo;
+class ExtractionResult extends WithCargo {
+  final Extraction extraction;
+  final Cooldown cooldown;
 
-    ExtractionResult({
-        required this.extraction,
-        required this.cooldown,
-        required this.cargo,
-    });
+  ExtractionResult({
+    required this.extraction,
+    required this.cooldown,
+    required super.cargo,
+  });
 
-    factory ExtractionResult.fromJson(Map<String, dynamic> json) => ExtractionResult(
+  factory ExtractionResult.fromJson(Map<String, dynamic> json) =>
+      ExtractionResult(
         extraction: Extraction.fromJson(json["extraction"]),
         cooldown: Cooldown.fromJson(json["cooldown"]),
         cargo: Cargo.fromJson(json["cargo"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "extraction": extraction.toJson(),
         "cooldown": cooldown.toJson(),
         "cargo": cargo.toJson(),
-    };
+      };
 }
 
 class Extraction {
-    final String shipSymbol;
-    final CargoItemSummary yield;
+  final String shipSymbol;
+  final CargoItemSummary yield;
 
-    Extraction({
-        required this.shipSymbol,
-        required this.yield,
-    });
+  Extraction({
+    required this.shipSymbol,
+    required this.yield,
+  });
 
-    factory Extraction.fromJson(Map<String, dynamic> json) => Extraction(
+  factory Extraction.fromJson(Map<String, dynamic> json) => Extraction(
         shipSymbol: json["shipSymbol"],
         yield: CargoItemSummary.fromJson(json["yield"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "shipSymbol": shipSymbol,
         "yield": yield.toJson(),
-    };
+      };
 }

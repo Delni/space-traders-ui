@@ -18,6 +18,14 @@ class StarMapProvider extends ChangeNotifier {
           .then((value) => _systems.putIfAbsent(systemSymbol, () => value))
           .whenComplete(notifyListeners);
 
+  Future<Waypoint> getWaypoint(String waypointSymbol) =>
+      get(waypointSymbol.split('-').take(2).join('-'))
+          .then((value) => value.waypoints)
+          .then(
+            (value) =>
+                value.firstWhere((element) => element.symbol == waypointSymbol),
+          );
+
   Future<System> enrichSystemWaypoints(System system) async {
     List<Map<String, dynamic>> rawWaypoints =
         await Adapters.navigationAdapter.getRawWaypoints(system.symbol);
@@ -32,8 +40,7 @@ class StarMapProvider extends ChangeNotifier {
             rawWaypoints,
             waypointSymbol: wp.symbol,
           ))
-          ..orbitals.addAll(
-            buildOrbitalsFrom(
+          ..orbitals.addAll(buildOrbitalsFrom(
             rawWaypoints,
             waypointSymbol: wp.symbol,
             waypoints: system.waypoints,

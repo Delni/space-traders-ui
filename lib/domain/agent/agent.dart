@@ -24,4 +24,18 @@ class Agent {
         "headquarters": headquarters,
         "credits": credits,
     };
+
+  Agent copyWith({
+    String? accountId,
+    String? symbol,
+    String? headquarters,
+    int? credits,
+  }) =>
+      Agent(
+        accountId: accountId ?? this.accountId,
+        symbol: symbol ?? this.symbol,
+        headquarters: headquarters ?? this.headquarters,
+        credits: credits ?? this.credits,
+      );
+    
 }

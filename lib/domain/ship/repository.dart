@@ -16,6 +16,7 @@ abstract class ShipRepository {
     required Ship ship,
     required String waypointSymbol,
   });
+
   Future<TransactionResult> sell({
     required Ship ship,
     required CargoItemSummary goods,

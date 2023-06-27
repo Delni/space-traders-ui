@@ -18,9 +18,17 @@ class FleetProvider extends ChangeNotifier {
       .then((_) => notifyListeners());
 
   Ship getBySymbol(String symbol) => fleet.firstWhere(hasSymbol(symbol));
+
   Ship Function(Ship) _update(Ship ship) =>
       (value) => _fleet![indexOf(ship)] = value;
+
   int indexOf(Ship ship) => fleet.indexWhere(hasSymbol(ship.symbol));
+
+  T Function(T) updateCargoOf<T extends WithCargo>(Ship ship) => (T value) {
+        _fleet![indexOf(ship)] = ship.copyWith(cargo: value.cargo);
+        notifyListeners();
+        return value;
+      };
 
   Future<void> navigateTo(NavPoint navpoint, Ship ship) => Adapters.shipAdapter
       .navigateTo(
@@ -49,12 +57,14 @@ class FleetProvider extends ChangeNotifier {
       .then((value) => notifyListeners());
 
   Future<Cooldown> extract(Ship ship) => Adapters.shipAdapter
-          .extract(ship: ship, waypointSymbol: ship.nav.waypointSymbol)
-          .then((value) {
-        _fleet![indexOf(ship)] = ship.copyWith(cargo: value.cargo);
-        notifyListeners();
-        return value.cooldown;
-      });
+      .extract(ship: ship, waypointSymbol: ship.nav.waypointSymbol)
+      .then(updateCargoOf(ship))
+      .then((value) => value.cooldown);
+
+  Future<int> sell(Ship ship, CargoItem item, int units) => Adapters.shipAdapter
+      .sell(ship: ship, goods: item.withUnits(units))
+      .then(updateCargoOf(ship))
+      .then((value) => value.transaction.totalPrice);
 
   Future<void> orbitOrDock(Ship ship) => Adapters.shipAdapter
       .orbitOrDock(

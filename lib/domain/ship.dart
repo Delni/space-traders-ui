@@ -6,5 +6,6 @@ export 'ship/ship_status.dart';
 export 'ship/flight_mode.dart';
 export 'ship/cargo/cargo.dart';
 export 'ship/cargo/cargo_item.dart';
+export 'ship/cargo/with_cargo.dart';
 export 'ship/cooldown/cooldown.dart';
 export 'ship/cooldown/extract.dart';

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:space_traders/domain/navigation/waypoint_trait.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_actions_bar.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_cargo_item.dart';
@@ -9,6 +10,7 @@ import 'package:space_traders/infra-ui/pages/ship/ship_gauge_info.dart';
 import 'package:space_traders/infra-ui/pages/starmap/bottom_system_navigation_map.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
+import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 import 'package:space_traders/infra-ui/route_args.mixin.dart';
 
 class ShipPageArguments {
@@ -26,6 +28,16 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
     final shipSymbol = parseRoute(context).ship.symbol;
     return Consumer<FleetProvider>(builder: (context, provider, _) {
       final ship = provider.getBySymbol(shipSymbol);
+      final hasMarketNearby =
+          Provider.of<StarMapProvider>(context, listen: false)
+              .getWaypoint(ship.nav.waypointSymbol)
+              .then(
+                (value) => value.traits.any(
+                  (element) =>
+                      element.symbol == WaypointTraitSymbol.MARKETPLACE &&
+                      ship.nav.status == ShipStatus.docked,
+                ),
+              );
       return Scaffold(
         appBar: AppBar(
           title: Hero(tag: ValueKey(ship.symbol), child: Text(ship.symbol)),
@@ -54,7 +66,8 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
               units: ship.cargo.units,
               capacity: ship.cargo.capacity,
             ),
-            ...ship.cargo.inventory.map((item) => ShipCargoItem(item: item))
+            ...ship.cargo.inventory.map((item) =>
+                ShipCargoItem(ship: ship, item: item, canSell: hasMarketNearby))
           ],
         ),
         bottomNavigationBar: ShipActionsBar(

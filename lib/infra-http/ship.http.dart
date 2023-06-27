@@ -17,9 +17,24 @@ class ShipHttpAdapter extends ShipRepository {
     required Ship ship,
     required String waypointSymbol,
   }) =>
-      httpClient.post("/my/ships/${ship.symbol}/extract", data: {
-        "waypointSymbol": waypointSymbol
-      }).then((value) => ExtractionResult.fromJson(value.data['data']));
+      httpClient
+          .post("/my/ships/${ship.symbol}/extract",
+              data: {"waypointSymbol": waypointSymbol})
+          .then((value) => ExtractionResult.fromJson(value.data['data']))
+          .catchError((error) {
+            if (error.response?.data['error']['code'] == 4000) {
+              return ExtractionResult(
+                cargo: ship.cargo,
+                extraction: Extraction(
+                  shipSymbol: ship.symbol,
+                  yield: CargoItemSummary(symbol: '', units: 0),
+                ),
+                cooldown: Cooldown.fromJson(
+                  error.response?.data['error']['data']['cooldown'],
+                ),
+              );
+            }
+          });
 
   @override
   Future<TransactionResult> sell({

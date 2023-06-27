@@ -7,6 +7,12 @@ class AgentProvider extends ChangeNotifier {
 
   Future<Agent> getMe() => Adapters.agentAdapter.getMe().then((value) {
         agent = value;
+        notifyListeners();
         return value;
       });
+
+  void updateCredits(int credits) {
+    agent = agent.copyWith(credits: agent.credits + credits);
+    notifyListeners();
+  }
 }

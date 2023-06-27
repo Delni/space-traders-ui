@@ -40,7 +40,7 @@ class ShipActionsBar extends StatelessWidget {
           child: const Text('Refuel'),
         ),
         ButtonWithCoolDown(
-          onPressed: onExtract,
+          onPressed: ship.nav.status == ShipStatus.inOrbit ? onExtract : null,
           child: const Text('Extract'),
         ),
         ElevatedButton(
