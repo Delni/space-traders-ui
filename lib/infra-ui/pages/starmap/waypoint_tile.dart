@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:space_traders/domain/navigation.dart';
+import 'package:space_traders/domain/navigation/waypoint_trait.dart';
+import 'package:space_traders/infra-ui/space_traders_icons_icons.dart';
 
 class WayPointTile extends StatelessWidget {
   final Waypoint waypoint;
@@ -11,6 +13,7 @@ class WayPointTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all((isChild ?? false) ? 0.0 : 8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -27,6 +30,19 @@ class WayPointTile extends StatelessWidget {
               ),
             ],
           ),
+          Row(
+            children: [
+              ...waypoint.traits
+                  .where((element) =>
+                      element.symbol == WaypointTraitSymbol.MARKETPLACE)
+                  .map((e) => const Icon(SpaceTradersIcons.market)),
+              ...waypoint.traits
+                  .where((element) =>
+                      element.symbol == WaypointTraitSymbol.SHIPYARD)
+                  .map((e) => const Icon(SpaceTradersIcons.shipyard)),
+            ],
+          ),
+          
           if (waypoint.orbitals.isNotEmpty) const Divider(),
           ...waypoint.orbitals.map(
             (e) => Row(

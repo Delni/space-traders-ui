@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:space_traders/domain/navigation/waypoint_trait.dart';
 
 enum WaypointType {
   planet,
@@ -45,24 +46,27 @@ class Waypoint {
   final WaypointType type;
   final Offset position;
   final List<Waypoint> orbitals;
+  final List<WaypointTrait> traits;
 
-  Waypoint(
-      {required this.symbol,
-      required this.type,
-      required this.position,
-      required this.orbitals});
+  Waypoint({
+    required this.symbol,
+    required this.type,
+    required this.position,
+    required this.orbitals,
+    required this.traits,
+  });
 
   String get name => symbol.split('-').last;
 
   factory Waypoint.fromJson(Map<String, dynamic> json) => Waypoint(
-        symbol: json["symbol"],
-        type: WaypointTypeMatcher.fromString(json["type"]),
-        position: Offset(
-          (json["x"] as int).toDouble(),
-          (json["y"] as int).toDouble(),
-        ),
-        orbitals: [],
-      );
+      symbol: json["symbol"],
+      type: WaypointTypeMatcher.fromString(json["type"]),
+      position: Offset(
+        (json["x"] as int).toDouble(),
+        (json["y"] as int).toDouble(),
+      ),
+      orbitals: [],
+      traits: []);
 
   Map<String, dynamic> toJson() => {
         "systemSymbol": symbol.split('-').take(2).join('-'),
