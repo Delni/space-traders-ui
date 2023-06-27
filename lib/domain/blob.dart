@@ -1,4 +1,4 @@
-import 'ship/engine_requirements.dart';
+import 'ship/frame/engine_requirements.dart';
 
 class Crew {
     final int current;

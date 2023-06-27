@@ -2,8 +2,8 @@ import 'package:space_traders/domain/entity.dart';
 import 'package:space_traders/domain/ship/registration.dart';
 
 import '../navigation/ship_nav.dart';
-import 'cargo.dart';
-import 'frame.dart';
+import 'cargo/cargo.dart';
+import 'frame/frame.dart';
 import 'fuel.dart';
 
 class Ship extends Entity {
