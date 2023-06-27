@@ -19,3 +19,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: SpaceTradersIcons
+      fonts:
+        - asset: assets/fonts/SpaceTradersIcons.ttf
