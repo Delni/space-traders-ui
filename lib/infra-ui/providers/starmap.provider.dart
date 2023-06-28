@@ -20,7 +20,7 @@ class StarMapProvider extends ChangeNotifier {
 
   Future<Waypoint> getWaypoint(String waypointSymbol) =>
       get(waypointSymbol.split('-').take(2).join('-'))
-          .then((value) => value.waypoints)
+          .then((value) => value.allWaypoints)
           .then(
             (value) =>
                 value.firstWhere((element) => element.symbol == waypointSymbol),

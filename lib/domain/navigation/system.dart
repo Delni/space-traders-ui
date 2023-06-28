@@ -19,6 +19,11 @@ class System {
     // required this.factions,
   });
 
+  Iterable<Waypoint> get allWaypoints => waypoints.expand((element) => [
+        element,
+        ...element.orbitals,
+      ]);
+
   System copyWith({
     String? symbol,
     String? sectorSymbol,
