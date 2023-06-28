@@ -16,14 +16,12 @@ Future<NavPoint?> showBottomSystemNavigationMap(
     showModalBottomSheet<NavPoint>(
       context: context,
       builder: (context) =>
-          Consumer<StarMapProvider>(builder: (context, provider, _) {
-        return Builder(builder: (context) {
-          return SystemNavigationMap(
+          Consumer<StarMapProvider>(
+        builder: (context, provider, _) => SystemNavigationMap(
             futureSystem: provider.get(systemSymbol),
             onNavigate: (navpoint) => Navigator.of(context).pop(navpoint),
-          );
-        });
-      }),
+        ),
+      ),
     );
 
 class SystemNavigationMap extends StatefulWidget {
@@ -67,7 +65,8 @@ class _SystemNavigationMapState extends State<SystemNavigationMap> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

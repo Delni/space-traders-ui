@@ -59,7 +59,8 @@ class StarMapPainter extends CustomPainter {
     final center = size / 2;
     final centerOffset = Offset(center.width, center.height);
     Paint starPaint = Paint()..color = Colors.amber;
-    Paint planetPaint = Paint()..color = Colors.blue;
+    Paint planetPaint = Paint()
+      ..color = Theme.of(context).textTheme.bodyMedium!.color!;
     Paint orbitPaint = Paint()
       ..color = planetPaint.color.withOpacity(0.5)
       ..style = PaintingStyle.stroke;

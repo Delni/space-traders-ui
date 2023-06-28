@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:space_traders/domain/ship.dart';
+import 'package:space_traders/infra-ui/components/ship_icon.dart';
 
 import './ship.dart';
 
@@ -12,16 +15,17 @@ class ShipSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Hero(
-          tag: ValueKey("${ship.symbol}_icon"),
-          child: const Icon(Icons.rocket_rounded),
+        leading: ShipIcon(
+          ship: ship,
+          angle: pi / 4,
+          opacity: 0.5,
         ),
         title: Hero(tag: ValueKey(ship.symbol), child: Text(ship.symbol)),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: navRow,
         ),
-        trailing: Text(ship.frame.symbol.name),
+        // trailing: Text(ship.frame.symbol.name),
         onTap: () => Navigator.of(context).pushNamed(
           ShipPage.route,
           arguments: ShipPageArguments(ship: ship),

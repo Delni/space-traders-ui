@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/domain/navigation/waypoint_trait.dart';
 import 'package:space_traders/domain/ship.dart';
+import 'package:space_traders/infra-ui/components/ship_icon.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_actions_bar.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_cargo_item.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_gauge_info.dart';
@@ -38,34 +41,39 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
               );
       return Scaffold(
         appBar: AppBar(
-          title: Hero(tag: ValueKey(ship.symbol), child: Text(ship.symbol)),
+          title: Text(ship.symbol),
         ),
-        body: ListView(
+        body: Stack(
+          alignment: Alignment.center,
           children: [
-            ListTile(
-              leading: Hero(
-                tag: ValueKey("${ship.symbol}_icon"),
-                child: const Icon(Icons.rocket_launch),
-              ),
-              title: Text("Type: ${ship.frame.symbol.name}"),
-              subtitle: Text(ship.frame.description),
-              trailing: Column(children: [
-                Text(ship.nav.status.name),
-                Text(ship.nav.waypointSymbol),
-              ]),
+            Positioned(
+              left: -MediaQuery.of(context).size.height / 2,
+              child: ShipIcon(ship: ship, opacity: 0.1, expand: true),
             ),
-            ShipGaugeInfo(
-              label: "Fuel",
-              units: ship.fuel.current,
-              capacity: ship.fuel.capacity,
+            ListView(
+              children: [
+                ListTile(
+                  title: Text("Type: ${ship.frame.symbol.name}"),
+                  subtitle: Text(ship.frame.description),
+                  trailing: Column(children: [
+                    Text(ship.nav.status.name),
+                    Text(ship.nav.waypointSymbol),
+                  ]),
+                ),
+                ShipGaugeInfo(
+                  label: "Fuel",
+                  units: ship.fuel.current,
+                  capacity: ship.fuel.capacity,
+                ),
+                ShipGaugeInfo(
+                  label: "Cargo",
+                  units: ship.cargo.units,
+                  capacity: ship.cargo.capacity,
+                ),
+                ...ship.cargo.inventory.map((item) => ShipCargoItem(
+                    ship: ship, item: item, canSell: hasMarketNearby))
+              ],
             ),
-            ShipGaugeInfo(
-              label: "Cargo",
-              units: ship.cargo.units,
-              capacity: ship.cargo.capacity,
-            ),
-            ...ship.cargo.inventory.map((item) =>
-                ShipCargoItem(ship: ship, item: item, canSell: hasMarketNearby))
           ],
         ),
         bottomNavigationBar: ShipActionsBar(

@@ -35,32 +35,51 @@ class MainApp extends StatelessWidget {
           cardTheme: const CardTheme(
             elevation: 0,
             clipBehavior: Clip.antiAlias,
-            color: Color.fromARGB(10, 197, 197, 243),
+            color: Color(0x09C5C5F3),
             shape: BeveledRectangleBorder(
               borderRadius: BorderRadiusDirectional.only(
                 topStart: Radius.circular(20),
                 bottomEnd: Radius.circular(20),
               ),
               side: BorderSide(
-                color: Color.fromARGB(134, 183, 206, 238),
+                color: Color(0x85B7CEEE),
                 width: 0.5,
               ),
             ),
           ),
           appBarTheme: const AppBarTheme(
             elevation: 0,
-            backgroundColor: Color.fromARGB(10, 197, 197, 243),
+            backgroundColor: Color(0x09C5C5F3),
             shape: BeveledRectangleBorder(
               borderRadius: BorderRadiusDirectional.only(
                 bottomStart: Radius.circular(10),
                 bottomEnd: Radius.circular(20),
               ),
               side: BorderSide(
-                color: Color.fromARGB(134, 183, 206, 238),
+                color: Color(0x85B7CEEE),
                 width: 0.5,
               ),
             ),
           ),
+          elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
+            shape: MaterialStateProperty.resolveWith((states) {
+              // If the button is pressed, return green, otherwise blue
+              if (states.contains(MaterialState.pressed)) {
+                return const BeveledRectangleBorder(
+                  borderRadius: BorderRadiusDirectional.only(
+                    topEnd: Radius.circular(10),
+                    bottomStart: Radius.circular(10),
+                  ),
+                );
+              }
+              return const BeveledRectangleBorder(
+                borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(10),
+                  bottomEnd: Radius.circular(10),
+                ),
+              );
+            }),
+          )),
           textTheme: const TextTheme(
             headlineLarge: TextStyle(
               fontFamily: 'BigMacca',
