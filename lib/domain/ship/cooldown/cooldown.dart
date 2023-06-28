@@ -15,6 +15,13 @@ class Cooldown {
     remainingSeconds--;
   }
 
+  static Cooldown get zero => Cooldown(
+        shipSymbol: "",
+        totalSeconds: 0,
+        remainingSeconds: 0,
+        expiration: DateTime.now(),
+      );
+
   factory Cooldown.fromJson(Map<String, dynamic> json) => Cooldown(
         shipSymbol: json["shipSymbol"],
         totalSeconds: json["totalSeconds"],

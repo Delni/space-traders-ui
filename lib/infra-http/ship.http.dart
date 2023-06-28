@@ -21,20 +21,20 @@ class ShipHttpAdapter extends ShipRepository {
           .post("/my/ships/${ship.symbol}/extract",
               data: {"waypointSymbol": waypointSymbol})
           .then((value) => ExtractionResult.fromJson(value.data['data']))
-          .catchError((error) {
-            if (error.response?.data['error']['code'] == 4000) {
-              return ExtractionResult(
+          .catchError(
+            (error) => ExtractionResult(
                 cargo: ship.cargo,
                 extraction: Extraction(
                   shipSymbol: ship.symbol,
                   yield: CargoItemSummary(symbol: '', units: 0),
                 ),
-                cooldown: Cooldown.fromJson(
+              cooldown: error.response?.data['error']['code'] == 4000
+                  ? Cooldown.fromJson(
                   error.response?.data['error']['data']['cooldown'],
-                ),
-              );
-            }
-          });
+                    )
+                  : Cooldown.zero.copyWith(shipSymbol: ship.symbol),
+            ),
+          );
 
   @override
   Future<TransactionResult> sell({
