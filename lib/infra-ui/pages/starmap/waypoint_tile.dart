@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/domain/navigation/waypoint_trait.dart';
-import 'package:space_traders/infra-ui/space_traders_icons_icons.dart';
+import 'package:space_traders/infra-ui/components/space_traders_icons_icons.dart';
 
 class WayPointTile extends StatelessWidget {
   final Waypoint waypoint;

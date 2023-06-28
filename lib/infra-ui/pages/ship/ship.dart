@@ -9,7 +9,7 @@ import 'package:space_traders/infra-ui/pages/starmap/bottom_system_navigation_ma
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
-import 'package:space_traders/infra-ui/route_args.mixin.dart';
+import 'package:space_traders/infra-ui/components/mixins/route_args.mixin.dart';
 
 class ShipPageArguments {
   final Ship ship;
