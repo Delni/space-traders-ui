@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
+import 'package:space_traders/infra-ui/components/future_button.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 
 class LoginField extends StatefulWidget {
@@ -16,9 +17,9 @@ class _LoginFieldState extends State<LoginField> {
   final TextEditingController controller = TextEditingController();
   String? errorMessage;
 
-  void saveTokenAndConnect(BuildContext context) {
+  Future saveTokenAndConnect(BuildContext context) {
     Adapters.saveTokenAdapter(controller.text);
-    Provider.of<AgentProvider>(context, listen: false)
+    return Provider.of<AgentProvider>(context, listen: false)
         .getMe()
         .then((value) => Navigator.of(context).pushReplacementNamed("/home"))
         .catchError((error) {
@@ -58,7 +59,7 @@ class _LoginFieldState extends State<LoginField> {
               aspectRatio: 1,
               child: Tooltip(
                 message: "Log in",
-                child: ElevatedButton(
+                child: FutureButton(
                   style: const ButtonStyle(
                     padding: MaterialStatePropertyAll(EdgeInsets.all(0)),
                   ),

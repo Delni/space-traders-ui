@@ -3,12 +3,13 @@ import 'package:space_traders/domain/ship/registration.dart';
 
 import '../navigation/ship_nav.dart';
 import 'cargo/cargo.dart';
+import 'crew.dart';
 import 'frame/frame.dart';
 import 'fuel.dart';
 
 class Ship extends Entity {
   final ShipNav nav;
-  // final Crew crew;
+  final Crew crew;
   final Fuel fuel;
   final ShipFrame frame;
   // final Reactor reactor;
@@ -21,7 +22,7 @@ class Ship extends Entity {
   Ship({
     required super.symbol,
     required this.nav,
-    // required this.crew,
+    required this.crew,
     required this.fuel,
     required this.frame,
     // required this.reactor,
@@ -35,7 +36,7 @@ class Ship extends Entity {
   factory Ship.fromJson(Map<String, dynamic> json) => Ship(
         symbol: json["symbol"],
         nav: ShipNav.fromJson(json["nav"]),
-        // crew: Crew.fromJson(json["crew"]),
+        crew: Crew.fromJson(json["crew"]),
         fuel: Fuel.fromJson(json["fuel"]),
         frame: ShipFrame.fromJson(json["frame"]),
         // reactor: Reactor.fromJson(json["reactor"]),
@@ -49,7 +50,7 @@ class Ship extends Entity {
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
         "nav": nav.toJson(),
-        // "crew": crew.toJson(),
+        "crew": crew.toJson(),
         "fuel": fuel.toJson(),
         // "frame": frame.toJson(),
         // "reactor": reactor.toJson(),
@@ -63,7 +64,7 @@ class Ship extends Entity {
   Ship copyWith({
     String? symbol,
     ShipNav? nav,
-    //  Crew? crew,
+    Crew? crew,
     Fuel? fuel,
     ShipFrame? frame,
     //  Reactor? reactor,
@@ -76,6 +77,7 @@ class Ship extends Entity {
       Ship(
         symbol: symbol ?? this.symbol,
         nav: nav ?? this.nav,
+        crew: crew ?? this.crew,
         frame: frame ?? this.frame,
         fuel: fuel ?? this.fuel,
         registration: registration ?? this.registration,

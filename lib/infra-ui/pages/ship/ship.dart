@@ -5,14 +5,17 @@ import 'package:provider/provider.dart';
 import 'package:space_traders/domain/navigation/waypoint_trait.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/components/ship_icon.dart';
-import 'package:space_traders/infra-ui/pages/ship/ship_actions_bar.dart';
-import 'package:space_traders/infra-ui/pages/ship/ship_cargo_item.dart';
-import 'package:space_traders/infra-ui/pages/ship/ship_gauge_info.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/ship_actions_bar.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/ship_cargo_item.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/ship_description.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/ship_gauge_info.dart';
 import 'package:space_traders/infra-ui/pages/starmap/bottom_system_navigation_map.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 import 'package:space_traders/infra-ui/components/mixins/route_args.mixin.dart';
+
+import 'components/ship_status.dart';
 
 class ShipPageArguments {
   final Ship ship;
@@ -40,9 +43,7 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
                 ),
               );
       return Scaffold(
-        appBar: AppBar(
-          title: Text(ship.symbol),
-        ),
+        appBar: AppBar(title: Text(ship.symbol)),
         body: Stack(
           alignment: Alignment.center,
           children: [
@@ -50,29 +51,23 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
               left: -MediaQuery.of(context).size.height / 2,
               child: ShipIcon(ship: ship, opacity: 0.1, expand: true),
             ),
-            ListView(
-              children: [
-                ListTile(
-                  title: Text("Type: ${ship.frame.symbol.name}"),
-                  subtitle: Text(ship.frame.description),
-                  trailing: Column(children: [
-                    Text(ship.nav.status.name),
-                    Text(ship.nav.waypointSymbol),
-                  ]),
-                ),
-                ShipGaugeInfo(
-                  label: "Fuel",
-                  units: ship.fuel.current,
-                  capacity: ship.fuel.capacity,
-                ),
-                ShipGaugeInfo(
-                  label: "Cargo",
-                  units: ship.cargo.units,
-                  capacity: ship.cargo.capacity,
-                ),
-                ...ship.cargo.inventory.map((item) => ShipCargoItem(
-                    ship: ship, item: item, canSell: hasMarketNearby))
-              ],
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: ListView(
+                children: [
+                  ShipDescription(ship: ship),
+                  ShipStatusSummary(ship: ship),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 8.0),
+                    child: Text(
+                      "Cargo",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  ),
+                  ...ship.cargo.inventory.map((item) => ShipCargoItem(
+                      ship: ship, item: item, canSell: hasMarketNearby))
+                ],
+              ),
             ),
           ],
         ),

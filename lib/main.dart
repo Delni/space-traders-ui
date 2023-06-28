@@ -32,6 +32,9 @@ class MainApp extends StatelessWidget {
           brightness: Brightness.dark,
           primaryColor: const Color(0xff2f81f7),
           scaffoldBackgroundColor: const Color(0xff0d1117),
+          progressIndicatorTheme: const ProgressIndicatorThemeData(
+            circularTrackColor: Color(0x85B7CEEE),
+          ),
           cardTheme: const CardTheme(
             elevation: 0,
             clipBehavior: Clip.antiAlias,

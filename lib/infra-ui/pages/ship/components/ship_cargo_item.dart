@@ -19,7 +19,7 @@ class ShipCargoItem extends StatelessWidget {
     return ListTile(
       leading: Text(
         item.units.toString(),
-        style: Theme.of(context).textTheme.headlineSmall,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 42),
       ),
       title: Text(item.name),
       subtitle: Text(item.description),

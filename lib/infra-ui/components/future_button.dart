@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 
 class FutureButton extends StatefulWidget {
   final Future Function() onPressed;
-  final String label;
+  final String? label;
+  final Widget? child;
+  final ButtonStyle? style;
 
-  const FutureButton({super.key, required this.onPressed, required this.label});
+  const FutureButton({
+    super.key,
+    required this.onPressed,
+    this.label,
+    this.child,
+    this.style,
+  }) : assert(label != null || child != null);
 
   @override
   State<FutureButton> createState() => _FutureButtonState();
@@ -24,6 +32,7 @@ class _FutureButtonState extends State<FutureButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: widget.style,
       onPressed: () async {
         startLoading();
         await widget.onPressed();
@@ -40,7 +49,7 @@ class _FutureButtonState extends State<FutureButton> {
                 ),
               ),
             )
-          : Text(widget.label),
+          : widget.child ?? Text(widget.label!),
     );
   }
 }

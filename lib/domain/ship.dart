@@ -2,6 +2,7 @@ export 'ship/ship.dart';
 export 'ship/repository.dart';
 export 'ship/registration.dart';
 export 'ship/role.dart';
+export 'ship/crew.dart';
 export 'ship/ship_status.dart';
 export 'ship/flight_mode.dart';
 export 'ship/frame/frame.dart';
