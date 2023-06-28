@@ -24,3 +24,9 @@ flutter:
     - family: SpaceTradersIcons
       fonts:
         - asset: assets/fonts/SpaceTradersIcons.ttf
+    - family: BigMacca
+      fonts:
+        - asset: assets/fonts/bigmacca.ttf
+    - family: Plastique
+      fonts:
+        - asset: assets/fonts/Plastique-regular.ttf

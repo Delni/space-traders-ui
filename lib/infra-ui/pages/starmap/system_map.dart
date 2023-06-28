@@ -12,8 +12,11 @@ class SystemMap extends StatelessWidget {
   final Matrix4 transform;
   static const double iconSize = 20;
 
-  const SystemMap(
-      {super.key, required this.waypoints, required this.transform});
+  const SystemMap({
+    super.key,
+    required this.waypoints,
+    required this.transform,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,7 @@ class SystemMap extends StatelessWidget {
             constraints.constrainHeight(),
           ),
           foregroundPainter: StarMapPainter(
+            context: context,
             waypoints: waypoints,
             transform: transform,
           ),
@@ -40,8 +44,12 @@ class StarMapPainter extends CustomPainter {
   final Iterable<Waypoint> waypoints;
   final Matrix4 transform;
   final TextPainter textPainter = TextPainter(textDirection: TextDirection.ltr);
+  final BuildContext context;
 
-  StarMapPainter({required this.transform, required this.waypoints});
+  StarMapPainter(
+      {required this.context,
+      required this.transform,
+      required this.waypoints});
 
   double get farestOrbit =>
       waypoints.map((e) => e.position.distance).reduce(max);
@@ -123,7 +131,9 @@ class StarMapPainter extends CustomPainter {
     canvas.drawCircle(Offset.zero, radius, painter);
     textPainter.text = TextSpan(
       text: label,
-      style: TextStyle(fontSize: radius * 2, color: Colors.black),
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontSize: radius * 2,
+          ),
     );
 
     textPainter.layout();
