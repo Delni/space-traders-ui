@@ -36,8 +36,10 @@ class _ButtonWithCoolDownState extends State<ButtonWithCoolDown>
 
   void setCooldown(Cooldown value) {
     controller.reset();
-    controller.duration = Duration(seconds: value.remainingSeconds);
-    controller.forward();
+    controller.duration = Duration(seconds: value.totalSeconds);
+    controller.forward(
+      from: (value.totalSeconds - value.remainingSeconds) / value.totalSeconds,
+    );
   }
 
   @override

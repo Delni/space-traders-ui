@@ -57,7 +57,13 @@ class Waypoint {
     required this.traits,
   });
 
+  String get systemSymbol => symbol.split('-').take(2).join('-');
   String get name => symbol.split('-').last;
+
+  bool get hasMarketplace => traits.any(
+        (e) => e.symbol == WaypointTraitSymbol.MARKETPLACE,
+      );
+  bool get isExtractable => {WaypointType.asteroidField}.contains(type);
 
   factory Waypoint.fromJson(Map<String, dynamic> json) => Waypoint(
       symbol: json["symbol"],

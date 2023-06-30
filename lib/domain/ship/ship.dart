@@ -1,7 +1,8 @@
 import 'package:space_traders/domain/entity.dart';
-import 'package:space_traders/domain/ship/registration.dart';
 
 import '../navigation/ship_nav.dart';
+import 'registration.dart';
+import 'ship_status.dart';
 import 'cargo/cargo.dart';
 import 'crew.dart';
 import 'frame/frame.dart';
@@ -46,6 +47,9 @@ class Ship extends Entity {
         registration: ShipRegistration.fromJson(json["registration"]),
         cargo: Cargo.fromJson(json["cargo"]),
       );
+
+  bool get isDocked => nav.status == ShipStatus.docked;
+  bool get inOrbit => nav.status == ShipStatus.inOrbit;
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
