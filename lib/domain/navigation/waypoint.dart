@@ -14,31 +14,32 @@ enum WaypointType {
 }
 
 extension WaypointTypeMatcher on WaypointType {
-  String get label {
-    switch (this) {
-      case WaypointType.planet:
-        return 'PLANET';
-      case WaypointType.gasGiant:
-        return 'GAS_GIANT';
-      case WaypointType.moon:
-        return 'MOON';
-      case WaypointType.orbitalStation:
-        return 'ORBITAL_STATION';
-      case WaypointType.jumpGate:
-        return 'JUMP_GATE';
-      case WaypointType.asteroidField:
-        return 'ASTEROID_FIELD';
-      case WaypointType.nebula:
-        return 'NEBULA';
-      case WaypointType.debrisField:
-        return 'DEBRIS_FIELD';
-      case WaypointType.gravityWell:
-        return 'GRAVITY_WELL';
-    }
-  }
+  String get asDTO => switch (this) {
+        WaypointType.planet => 'PLANET',
+        WaypointType.gasGiant => 'GAS_GIANT',
+        WaypointType.moon => 'MOON',
+        WaypointType.orbitalStation => 'ORBITAL_STATION',
+        WaypointType.jumpGate => 'JUMP_GATE',
+        WaypointType.asteroidField => 'ASTEROID_FIELD',
+        WaypointType.nebula => 'NEBULA',
+        WaypointType.debrisField => 'DEBRIS_FIELD',
+        WaypointType.gravityWell => 'GRAVITY_WELL'
+      };
+
+  String get label => switch (this) {
+        WaypointType.planet => 'Planet',
+        WaypointType.gasGiant => 'Gas Giant',
+        WaypointType.moon => 'Moon',
+        WaypointType.orbitalStation => 'Orbital station',
+        WaypointType.jumpGate => 'Jump gate',
+        WaypointType.asteroidField => 'Asteroid field',
+        WaypointType.nebula => 'Nebula',
+        WaypointType.debrisField => 'Debris field',
+        WaypointType.gravityWell => 'Gravity well'
+      };
 
   static WaypointType fromString(String name) => WaypointType.values
-      .firstWhere((element) => element.label == name.toUpperCase());
+      .firstWhere((element) => element.asDTO == name.toUpperCase());
 }
 
 class Waypoint {
@@ -71,7 +72,7 @@ class Waypoint {
   Map<String, dynamic> toJson() => {
         "systemSymbol": symbol.split('-').take(2).join('-'),
         "symbol": symbol,
-        "type": type.label,
+        "type": type.asDTO,
         "x": position.dx.toInt(),
         "y": position.dy.toInt(),
       };

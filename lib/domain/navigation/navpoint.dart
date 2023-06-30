@@ -28,7 +28,7 @@ class NavPoint {
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
-        "type": type.label,
+        "type": type.asDTO,
         "systemSymbol": systemSymbol,
         "x": x,
         "y": y,

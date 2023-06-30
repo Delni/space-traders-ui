@@ -19,7 +19,7 @@ class WayPointTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(waypoint.type.label),
+                child: Text(waypoint.type.asDTO),
               ),
               Expanded(child: Text(waypoint.name)),
               ElevatedButton(

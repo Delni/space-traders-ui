@@ -91,7 +91,7 @@ class StarMapPainter extends CustomPainter {
         origin: waypointToScale,
         painter: planetPaint,
         radius: 5,
-        label: "${waypoint.name} – ${waypoint.type.label}",
+        label: "${waypoint.name} – ${waypoint.type.asDTO}",
       );
 
       for (var i = 0; i < waypoint.orbitals.length; i++) {
@@ -113,7 +113,7 @@ class StarMapPainter extends CustomPainter {
               ),
           painter: planetPaint,
           radius: 2,
-          label: "${orbital.name} – ${orbital.type.label}",
+          label: "${orbital.name} – ${orbital.type.asDTO}",
         );
       }
     }

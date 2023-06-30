@@ -31,7 +31,7 @@ class ShipNav {
         "systemSymbol": systemSymbol,
         "waypointSymbol": waypointSymbol,
         "route": route.toJson(),
-        "status": status.label,
+        "status": status.asDTO,
         "flightMode": flightMode,
       };
 
