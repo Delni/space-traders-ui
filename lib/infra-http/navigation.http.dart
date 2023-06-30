@@ -1,3 +1,4 @@
+import 'package:space_traders/domain/market/market.dart';
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/infra-http/http_client.dart';
 
@@ -12,4 +13,10 @@ class NavigationHttpAdapter implements NavigationRepository {
       httpClient
           .get("/systems/$systemSymbol/waypoints")
           .then((value) => List.from(value.data['data']));
+
+  @override
+  Future<Market?> findMarket(Waypoint waypoint) => httpClient
+      .get(
+          "/systems/${waypoint.systemSymbol}/waypoints/${waypoint.symbol}/market")
+      .then((value) => Market.fromJson(value.data['data']));
 }

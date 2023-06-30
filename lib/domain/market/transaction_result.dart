@@ -1,4 +1,4 @@
-import 'package:space_traders/domain/transaction.dart';
+import 'package:space_traders/domain/market.dart';
 import 'package:space_traders/domain/agent.dart';
 import 'package:space_traders/domain/ship.dart';
 
