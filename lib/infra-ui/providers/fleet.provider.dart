@@ -66,6 +66,11 @@ class FleetProvider extends ChangeNotifier {
       .then(updateCargoOf(ship))
       .then((value) => value.transaction.totalPrice);
 
+  Future<int> purchase(Ship ship, CargoItemSummary item) => Adapters.shipAdapter
+      .purchase(ship: ship, goods: item)
+      .then(updateCargoOf(ship))
+      .then((value) => value.transaction.totalPrice * -1);
+
   Future<void> orbitOrDock(Ship ship) => Adapters.shipAdapter
       .orbitOrDock(
         ship: ship,

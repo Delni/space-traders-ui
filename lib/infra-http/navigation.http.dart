@@ -15,8 +15,10 @@ class NavigationHttpAdapter implements NavigationRepository {
           .then((value) => List.from(value.data['data']));
 
   @override
-  Future<Market?> findMarket(Waypoint waypoint) => httpClient
+  Future<Market?> findMarket(String waypointSymbol) => httpClient
       .get(
-          "/systems/${waypoint.systemSymbol}/waypoints/${waypoint.symbol}/market")
-      .then((value) => Market.fromJson(value.data['data']));
+        "/systems/${waypointSymbol.split('-').take(2).join('-')}/waypoints/$waypointSymbol/market",
+      )
+      .then((value) => Market.fromJson(value.data['data']))
+      .catchError(print);
 }

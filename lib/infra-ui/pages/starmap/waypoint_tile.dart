@@ -30,18 +30,18 @@ class WayPointTile extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: [
-              ...waypoint.traits
-                  .where((element) =>
-                      element.symbol == WaypointTraitSymbol.MARKETPLACE)
-                  .map((e) => const Icon(SpaceTradersIcons.market)),
-              ...waypoint.traits
-                  .where((element) =>
-                      element.symbol == WaypointTraitSymbol.SHIPYARD)
-                  .map((e) => const Icon(SpaceTradersIcons.shipyard)),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     ...waypoint.traits
+          //         .where((element) =>
+          //             element.symbol == WaypointTraitSymbol.MARKETPLACE)
+          //         .map((e) => const Icon(SpaceTradersIcons.market)),
+          //     ...waypoint.traits
+          //         .where((element) =>
+          //             element.symbol == WaypointTraitSymbol.SHIPYARD)
+          //         .map((e) => const Icon(SpaceTradersIcons.shipyard)),
+          //   ],
+          // ),
           
           if (waypoint.orbitals.isNotEmpty) const Divider(),
           ...waypoint.orbitals.map(

@@ -1,7 +1,7 @@
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/domain/ship/fuel.dart';
-import 'package:space_traders/domain/transaction/transaction_result.dart';
+import 'package:space_traders/domain/market/transaction_result.dart';
 
 abstract class ShipRepository {
   const ShipRepository();
@@ -18,6 +18,11 @@ abstract class ShipRepository {
   });
 
   Future<TransactionResult> sell({
+    required Ship ship,
+    required CargoItemSummary goods,
+  });
+
+  Future<TransactionResult> purchase({
     required Ship ship,
     required CargoItemSummary goods,
   });

@@ -1,6 +1,5 @@
 import '../market.dart';
 import 'system.dart';
-import 'waypoint.dart';
 
 abstract class NavigationRepository {
   const NavigationRepository();
@@ -9,5 +8,5 @@ abstract class NavigationRepository {
 
   Future<List<Map<String, dynamic>>> getRawWaypoints(String systemSymbol);
 
-  Future<Market?> findMarket(Waypoint waypoint);
+  Future<Market?> findMarket(String waypointSymbol);
 }

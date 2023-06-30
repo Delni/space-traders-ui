@@ -3,9 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:space_traders/infra-ui/pages/home/home.dart';
 import 'package:space_traders/infra-ui/pages/login/login.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship.dart';
+import 'package:space_traders/infra-ui/pages/starmap/market_place.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
+
+import 'infra-ui/components/pallette.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,6 +17,7 @@ void main() {
 Map<String, WidgetBuilder> routes = {
   HomePage.route: (context) => const HomePage(),
   ShipPage.route: (context) => const ShipPage(),
+  MarketPlacePage.route: (context) => const MarketPlacePage(),
 };
 
 class MainApp extends StatelessWidget {
@@ -30,44 +34,43 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: const Color(0xff2f81f7),
-          scaffoldBackgroundColor: const Color(0xff0d1117),
+          primaryColor: blue,
+          scaffoldBackgroundColor: black,
           progressIndicatorTheme: const ProgressIndicatorThemeData(
-            circularTrackColor: Color(0x85B7CEEE),
+            circularTrackColor: lightWhite,
           ),
           cardTheme: const CardTheme(
             elevation: 0,
             clipBehavior: Clip.antiAlias,
-            color: Color(0x09C5C5F3),
+            color: transparentWhite,
             shape: BeveledRectangleBorder(
               borderRadius: BorderRadiusDirectional.only(
                 topStart: Radius.circular(20),
                 bottomEnd: Radius.circular(20),
               ),
               side: BorderSide(
-                color: Color(0x85B7CEEE),
+                color: lightWhite,
                 width: 0.5,
               ),
             ),
           ),
           appBarTheme: const AppBarTheme(
             elevation: 0,
-            backgroundColor: Color(0x09C5C5F3),
+            backgroundColor: transparentWhite,
             shape: BeveledRectangleBorder(
               borderRadius: BorderRadiusDirectional.only(
                 bottomStart: Radius.circular(10),
                 bottomEnd: Radius.circular(20),
               ),
               side: BorderSide(
-                color: Color(0x85B7CEEE),
+                color: lightWhite,
                 width: 0.5,
               ),
             ),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
             shape: MaterialStateProperty.resolveWith((states) {
-              // If the button is pressed, return green, otherwise blue
-              if (states.contains(MaterialState.pressed)) {
+              if (states.contains(MaterialState.disabled)) {
                 return const BeveledRectangleBorder(
                   borderRadius: BorderRadiusDirectional.only(
                     topEnd: Radius.circular(10),
@@ -83,14 +86,44 @@ class MainApp extends StatelessWidget {
               );
             }),
           )),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+              style: ButtonStyle(
+            side: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.disabled)) {
+                return const BorderSide(color: lightWhite, width: 0.5);
+              }
+              return const BorderSide(color: blue, width: 0.5);
+            }),
+            foregroundColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.disabled)) {
+                return lightWhite;
+              }
+              return white;
+            }),
+            shape: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.disabled)) {
+                return const BeveledRectangleBorder(
+                  borderRadius: BorderRadiusDirectional.only(
+                    topEnd: Radius.circular(10),
+                    bottomStart: Radius.circular(10),
+                  ),
+                );
+              }
+              return const BeveledRectangleBorder(
+                  borderRadius: BorderRadiusDirectional.only(
+                topStart: Radius.circular(10),
+                bottomEnd: Radius.circular(10),
+              ));
+            }),
+          )),
           textTheme: const TextTheme(
             headlineLarge: TextStyle(
               fontFamily: 'BigMacca',
-              color: Color(0xffe6edf3),
+              color: white,
             ),
             headlineMedium: TextStyle(
               fontFamily: 'BigMacca',
-              color: Color(0xffe6edf3),
+              color: white,
             ),
             headlineSmall: TextStyle(fontFamily: 'BigMacca'),
             bodyLarge: TextStyle(fontFamily: 'Plastique'),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FutureButton extends StatefulWidget {
-  final Future Function() onPressed;
+  final Future Function()? onPressed;
   final String? label;
   final Widget? child;
   final ButtonStyle? style;
@@ -33,11 +33,13 @@ class _FutureButtonState extends State<FutureButton> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: widget.style,
-      onPressed: () async {
+      onPressed: widget.onPressed != null
+          ? () async {
         startLoading();
-        await widget.onPressed();
+              await widget.onPressed!();
         stopLoading();
-      },
+            }
+          : null,
       child: loading
           ? const SizedBox(
               height: 12,

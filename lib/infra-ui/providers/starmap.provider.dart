@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:space_traders/domain/market/market.dart';
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/domain/navigation/waypoint_trait.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
@@ -25,6 +26,9 @@ class StarMapProvider extends ChangeNotifier {
             (value) =>
                 value.firstWhere((element) => element.symbol == waypointSymbol),
           );
+
+  Future<Market?> findMarket(String waypointSymbol) =>
+      Adapters.navigationAdapter.findMarket(waypointSymbol);
 
   Future<System> _enrichSystemWaypoints(System system) async {
     List<Map<String, dynamic>> rawWaypoints =
