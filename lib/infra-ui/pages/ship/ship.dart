@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/domain/ship.dart';
-import 'package:space_traders/infra-ui/components/future_button.dart';
 import 'package:space_traders/infra-ui/components/ship_icon.dart';
 import 'package:space_traders/infra-ui/components/section_header.dart';
 import 'package:space_traders/infra-ui/pages/ship/components/ship_description.dart';
@@ -43,17 +42,10 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
                   ShipDescription(ship: ship),
                   Expanded(child: Container()),
                   ShipStatusSummary(shipSymbol: shipSymbol),
-                  SectionHeader(
-                    title: 'Location',
-                    actions: [
-                      FutureButton(
-                        onPressed: () => provider.orbitOrDock(ship),
-                        label: ship.isDocked ? 'Orbit' : 'Dock',
-                      )
-                    ],
-                  ),
+                  const SectionHeader(title: 'Location'),
                   ShipLocationAmenities(
                     ship: ship,
+                    onOrbitOrDock: () => provider.orbitOrDock(ship),
                     onExtract: () => provider.extract(ship),
                     onNavigate: () => showBottomSystemNavigationMap(
                       context,

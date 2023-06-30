@@ -26,12 +26,12 @@ class ShipGaugeInfo extends StatelessWidget {
           onTap: onPressed,
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 120,
-                child: AspectRatio(
-                  aspectRatio: 1 / 1.5,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width / 5 - 16,
+              child: AspectRatio(
+                aspectRatio: 1 / 1.5,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -39,9 +39,16 @@ class ShipGaugeInfo extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           Text("$units"),
-                          CircularProgressIndicator(
-                            value: units / max(capacity, 1),
-                            strokeWidth: 2,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width / 10,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: CircularProgressIndicator(
+                                value: units / max(capacity, 1),
+                                strokeWidth:
+                                    MediaQuery.of(context).size.width / 200,
+                              ),
+                            ),
                           ),
                         ],
                       ),

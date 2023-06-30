@@ -39,7 +39,8 @@ class MainApp extends StatelessWidget {
           primaryColor: blue,
           scaffoldBackgroundColor: black,
           progressIndicatorTheme: const ProgressIndicatorThemeData(
-            circularTrackColor: lightWhite),
+            circularTrackColor: lightWhite,
+          ),
           bottomSheetTheme: const BottomSheetThemeData(
             backgroundColor: Colors.transparent,
           ),
@@ -128,6 +129,7 @@ class MainApp extends StatelessWidget {
             headlineMedium: TextStyle(
               fontFamily: 'BigMacca',
               color: white,
+              fontSize: 32,
             ),
             headlineSmall: TextStyle(fontFamily: 'BigMacca'),
             bodyLarge: TextStyle(fontFamily: 'Plastique'),

@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/domain/navigation/waypoint.dart';
 import 'package:space_traders/domain/ship.dart';
-import 'package:space_traders/infra-ui/components/button_with_cooldown.dart';
-import 'package:space_traders/infra-ui/pages/starmap/market_place.dart';
+import 'package:space_traders/infra-ui/components/future_button.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/amenities/docked_amenities.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/amenities/in_orbit_amenities.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 
-class ShipLocationAmenities extends StatelessWidget {
+class ShipLocationAmenities extends StatefulWidget {
   final Ship ship;
+  final Future Function() onOrbitOrDock;
   final Future<Cooldown> Function() onExtract;
   final Future Function() onNavigate;
 
@@ -16,13 +20,47 @@ class ShipLocationAmenities extends StatelessWidget {
     required this.ship,
     required this.onExtract,
     required this.onNavigate,
+    required this.onOrbitOrDock,
   });
+
+  @override
+  State<ShipLocationAmenities> createState() => _ShipLocationAmenitiesState();
+}
+
+class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
+  PageController controller = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    Timer(const Duration(milliseconds: 10), updatePage);
+    super.initState();
+  }
+
+  void updatePage() {
+    setState(() {
+      controller.animateToPage(widget.ship.isDocked ? 0 : 1,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutSine);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<StarMapProvider>(builder: (context, provider, _) {
+      final orbitOrDockButton = Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: FutureButton(
+          onPressed: () => widget.onOrbitOrDock().then((value) => updatePage()),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              widget.ship.isDocked ? 'Orbit' : 'Dock',
+            ),
+          ),
+        ),
+      );
       return FutureBuilder(
-        future: provider.getWaypoint(ship.nav.waypointSymbol),
+        future: provider.getWaypoint(widget.ship.nav.waypointSymbol),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             return const LinearProgressIndicator();
@@ -47,83 +85,46 @@ class ShipLocationAmenities extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("Status"),
-                  Text(ship.nav.status.label),
+                  Text(widget.ship.nav.status.label),
                 ],
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Center(child: Text("In Orbit")),
-                          ),
-                          if (waypoint.isExtractable)
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: ButtonWithCoolDown(
-                                onPressed: ship.inOrbit ? onExtract : null,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Text("Extract"),
-                                ),
-                              ),
-                            ),
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: OutlinedButton(
-                              onPressed: ship.inOrbit ? onNavigate : null,
-                              child: const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: Text("Navigate"),
-                              ),
-                            ),
-                          )
-                        ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 5,
+                child: PageView(
+                  scrollDirection: Axis.horizontal,
+                  controller: controller,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InOrbitAmenities(
+                        ship: widget.ship,
+                        waypoint: waypoint,
+                        onExtract: widget.onExtract,
+                        onNavigate: widget.onNavigate,
+                        orbitOrDockButton: orbitOrDockButton,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Center(child: Text("On Docks")),
-                          ),
-                          if (waypoint.hasMarketplace)
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: OutlinedButton(
-                                onPressed: ship.isDocked
-                                    ? () => Navigator.of(context).pushNamed(
-                                          MarketPlacePage.route,
-                                          arguments: ship,
-                                        )
-                                    : null,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Text("Access Market"),
-                                ),
-                              ),
-                            ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DockedAmenities(
+                        ship: widget.ship,
+                        waypoint: waypoint,
+                        orbitOrDockButton: orbitOrDockButton,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           );
         },
       );
     });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

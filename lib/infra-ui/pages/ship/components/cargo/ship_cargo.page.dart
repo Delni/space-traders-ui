@@ -4,7 +4,6 @@ import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/components/good_exchange_sheet.dart';
 import 'package:space_traders/infra-ui/components/mixins/route_args.mixin.dart';
 import 'package:space_traders/infra-ui/pages/ship/components/cargo/ship_cargo_column.dart';
-import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 
 class ShipCargoPage extends StatelessWidget with RouteArgs<String> {
