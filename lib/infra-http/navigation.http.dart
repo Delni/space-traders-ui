@@ -19,6 +19,5 @@ class NavigationHttpAdapter implements NavigationRepository {
       .get(
         "/systems/${waypointSymbol.split('-').take(2).join('-')}/waypoints/$waypointSymbol/market",
       )
-      .then((value) => Market.fromJson(value.data['data']))
-      .catchError(print);
+      .then((value) => Market.fromJson(value.data['data']));
 }

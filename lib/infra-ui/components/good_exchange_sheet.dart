@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/components/future_button.dart';
 import 'package:space_traders/infra-ui/components/pallette.dart';
 
