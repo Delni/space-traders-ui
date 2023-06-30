@@ -14,7 +14,7 @@ class StarMapProvider extends ChangeNotifier {
       ? Future.value(_systems[systemSymbol]!)
       : Adapters.navigationAdapter
           .getSystem(systemSymbol)
-          .then(enrichSystemWaypoints)
+          .then(_enrichSystemWaypoints)
           .then((value) => _systems.putIfAbsent(systemSymbol, () => value))
           .whenComplete(notifyListeners);
 
@@ -26,7 +26,7 @@ class StarMapProvider extends ChangeNotifier {
                 value.firstWhere((element) => element.symbol == waypointSymbol),
           );
 
-  Future<System> enrichSystemWaypoints(System system) async {
+  Future<System> _enrichSystemWaypoints(System system) async {
     List<Map<String, dynamic>> rawWaypoints =
         await Adapters.navigationAdapter.getRawWaypoints(system.symbol);
 
@@ -36,11 +36,11 @@ class StarMapProvider extends ChangeNotifier {
 
     List<Waypoint> actualWaypoints = system.waypoints
         .map((wp) => wp
-          ..traits.addAll(buildTraitsFrom(
+          ..traits.addAll(_buildTraitsFrom(
             rawWaypoints,
             waypointSymbol: wp.symbol,
           ))
-          ..orbitals.addAll(buildOrbitalsFrom(
+          ..orbitals.addAll(_buildOrbitalsFrom(
             rawWaypoints,
             waypointSymbol: wp.symbol,
             waypoints: system.waypoints,
@@ -51,25 +51,25 @@ class StarMapProvider extends ChangeNotifier {
     return system.copyWith(waypoints: actualWaypoints);
   }
 
-  Iterable<Waypoint> buildOrbitalsFrom(
+  Iterable<Waypoint> _buildOrbitalsFrom(
     List<RawDTO> rawWaypoints, {
     required String waypointSymbol,
     required List<Waypoint> waypoints,
   }) =>
-      List.from(getRawFor(waypointSymbol)(rawWaypoints)['orbitals'])
+      List.from(_getRawFor(waypointSymbol)(rawWaypoints)['orbitals'])
           .map((orbital) => orbital['symbol'])
           .map((orbitalSymbol) => waypoints.firstWhere(
                 (element) => orbitalSymbol == element.symbol,
               ));
 
-  Iterable<WaypointTrait> buildTraitsFrom(
+  Iterable<WaypointTrait> _buildTraitsFrom(
     List<RawDTO> rawWaypoints, {
     required String waypointSymbol,
   }) =>
-      List.from(getRawFor(waypointSymbol)(rawWaypoints)['traits'])
+      List.from(_getRawFor(waypointSymbol)(rawWaypoints)['traits'])
           .map((trait) => WaypointTrait.fromJson(trait));
 
-  RawDTO Function(List<RawDTO>) getRawFor(String waypointSymbol) =>
+  RawDTO Function(List<RawDTO>) _getRawFor(String waypointSymbol) =>
       (List<RawDTO> rawWaypoints) => rawWaypoints.firstWhere(
             (element) => element['symbol'] == waypointSymbol,
           );
