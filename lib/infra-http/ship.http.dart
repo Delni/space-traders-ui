@@ -55,6 +55,15 @@ class ShipHttpAdapter extends ShipRepository {
           .then((value) => TransactionResult.fromJson(value.data['data']));
 
   @override
+  Future<Cargo> jettison({
+    required Ship ship,
+    required CargoItemSummary goods,
+  }) =>
+      httpClient
+          .post("/my/ships/${ship.symbol}/jettison", data: goods.toJson())
+          .then((value) => Cargo.fromJson(value.data['data']['cargo']));
+
+  @override
   Future<ShipNav> orbitOrDock({
     required Ship ship,
     required String waypointSymbol,

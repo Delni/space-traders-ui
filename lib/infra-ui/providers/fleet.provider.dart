@@ -61,8 +61,8 @@ class FleetProvider extends ChangeNotifier {
       .then(updateCargoOf(ship))
       .then((value) => value.cooldown);
 
-  Future<int> sell(Ship ship, CargoItem item, int units) => Adapters.shipAdapter
-      .sell(ship: ship, goods: item.withUnits(units))
+  Future<int> sell(Ship ship, CargoItemSummary item) => Adapters.shipAdapter
+      .sell(ship: ship, goods: item)
       .then(updateCargoOf(ship))
       .then((value) => value.transaction.totalPrice);
 
@@ -70,6 +70,12 @@ class FleetProvider extends ChangeNotifier {
       .purchase(ship: ship, goods: item)
       .then(updateCargoOf(ship))
       .then((value) => value.transaction.totalPrice * -1);
+
+  Future<void> jettison(Ship ship, CargoItemSummary item) =>
+      Adapters.shipAdapter.jettison(ship: ship, goods: item).then((value) {
+        _fleet![indexOf(ship)] = ship.copyWith(cargo: value);
+        notifyListeners();
+      });
 
   Future<void> orbitOrDock(Ship ship) => Adapters.shipAdapter
       .orbitOrDock(

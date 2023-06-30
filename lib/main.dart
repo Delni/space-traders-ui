@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/infra-ui/pages/home/home.dart';
 import 'package:space_traders/infra-ui/pages/login/login.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/cargo/ship_cargo.page.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship.dart';
 import 'package:space_traders/infra-ui/pages/starmap/market_place.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
@@ -17,6 +18,7 @@ void main() {
 Map<String, WidgetBuilder> routes = {
   HomePage.route: (context) => const HomePage(),
   ShipPage.route: (context) => const ShipPage(),
+  ShipCargoPage.route: (context) => const ShipCargoPage(),
   MarketPlacePage.route: (context) => const MarketPlacePage(),
 };
 
@@ -37,7 +39,9 @@ class MainApp extends StatelessWidget {
           primaryColor: blue,
           scaffoldBackgroundColor: black,
           progressIndicatorTheme: const ProgressIndicatorThemeData(
-            circularTrackColor: lightWhite,
+            circularTrackColor: lightWhite),
+          bottomSheetTheme: const BottomSheetThemeData(
+            backgroundColor: Colors.transparent,
           ),
           cardTheme: const CardTheme(
             elevation: 0,

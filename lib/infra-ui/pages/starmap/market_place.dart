@@ -6,7 +6,7 @@ import 'package:space_traders/infra-ui/components/mixins/route_args.mixin.dart';
 import 'package:space_traders/infra-ui/components/pallette.dart';
 import 'package:space_traders/infra-ui/components/section_header.dart';
 import 'package:space_traders/infra-ui/components/space_traders_icons_icons.dart';
-import 'package:space_traders/infra-ui/pages/ship/components/ship_cargo_item.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/cargo/ship_cargo_column.dart';
 import 'package:space_traders/infra-ui/pages/starmap/refuel_button.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
@@ -32,41 +32,24 @@ class MarketPlacePage extends StatelessWidget with RouteArgs<Ship> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SectionHeader(title: "Cargo"),
                 Expanded(
-                  child:
-                      Consumer<FleetProvider>(builder: (context, provider, _) {
-                    final cargo = provider.getBySymbol(ship.symbol).cargo;
-                    if (ship.cargo.inventory.isEmpty) {
-                      return Text(
-                        "Cargo is empty",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(fontSize: 15),
-                      );
-                    }
-                    return ListView.builder(
-                      itemBuilder: (context, index) => ShipCargoItem(
-                        ship: ship,
-                        item: cargo.inventory[index],
-                        action: ElevatedButton(
+                  child: Consumer<FleetProvider>(
+                    builder: (context, provider, child) => ShipCargoColumn(
+                      cargo: provider.getBySymbol(ship.symbol).cargo,
+                      action: (CargoItem item) => ElevatedButton(
                           child: const Text('Sell'),
                           onPressed: () => showSellingSheet(
                             context,
-                            cargo.inventory[index],
+                          item,
                             ship,
                             pricePerUnit: snapshot.data?.tradeGoods
                                 .firstWhere((element) =>
-                                    element.symbol ==
-                                    cargo.inventory[index].symbol)
+                                    element.symbol == item.symbol)
                                 .sellPrice,
                           ),
-                        ),
                       ),
-                      itemCount: cargo.inventory.length,
-                    );
-                  }),
+                    ),
+                  ),
                 ),
                 const SectionHeader(title: "Market"),
                 if (snapshot.connectionState != ConnectionState.done)
@@ -175,7 +158,7 @@ void showSellingSheet(
             );
 
             return Provider.of<FleetProvider>(context, listen: false)
-                .sell(ship, item, units)
+                .sell(ship, item.withUnits(units))
                 .then(agentProvider.updateCredits)
                 .then(Navigator.of(context).pop);
           },

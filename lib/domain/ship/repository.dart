@@ -27,6 +27,11 @@ abstract class ShipRepository {
     required CargoItemSummary goods,
   });
 
+  Future<Cargo> jettison({
+    required Ship ship,
+    required CargoItemSummary goods,
+  });
+
   Future<ShipNav> orbitOrDock({
     required Ship ship,
     required String waypointSymbol,

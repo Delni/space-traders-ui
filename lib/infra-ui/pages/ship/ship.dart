@@ -1,16 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/components/future_button.dart';
 import 'package:space_traders/infra-ui/components/ship_icon.dart';
-import 'package:space_traders/infra-ui/pages/ship/components/ship_actions_bar.dart';
 import 'package:space_traders/infra-ui/components/section_header.dart';
-import 'package:space_traders/infra-ui/pages/ship/components/ship_cargo_item.dart';
 import 'package:space_traders/infra-ui/pages/ship/components/ship_description.dart';
 import 'package:space_traders/infra-ui/pages/ship/components/ship_location_amenities.dart';
 import 'package:space_traders/infra-ui/pages/starmap/bottom_system_navigation_map.dart';
-import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 import 'package:space_traders/infra-ui/components/mixins/route_args.mixin.dart';
 
@@ -42,25 +38,11 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: ListView(
+              child: Column(
                 children: [
                   ShipDescription(ship: ship),
-                  ShipStatusSummary(ship: ship),
-                  const SectionHeader(title: 'Cargo'),
-                  if (ship.cargo.inventory.isEmpty)
-                    Text(
-                      "Cargo is empty",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontSize: 15),
-                    ),
-                  ...ship.cargo.inventory.map(
-                    (item) => ShipCargoItem(
-                      ship: ship,
-                      item: item,
-                    ),
-                  ),
+                  Expanded(child: Container()),
+                  ShipStatusSummary(shipSymbol: shipSymbol),
                   SectionHeader(
                     title: 'Location',
                     actions: [
@@ -73,26 +55,19 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
                   ShipLocationAmenities(
                     ship: ship,
                     onExtract: () => provider.extract(ship),
+                    onNavigate: () => showBottomSystemNavigationMap(
+                      context,
+                      ship.nav.systemSymbol,
+                    ).then((value) {
+                      if (value != null) {
+                        provider.navigateTo(value, ship);
+                      }
+                    }),
                   )
                 ],
               ),
             ),
           ],
-        ),
-        bottomNavigationBar: ShipActionsBar(
-          ship: ship,
-          onRefuel: () => provider.refuel(ship).then(
-                (value) =>
-                    Provider.of<AgentProvider>(context, listen: false).getMe(),
-              ),
-          onNavigate: () => showBottomSystemNavigationMap(
-            context,
-            ship.nav.systemSymbol,
-          ).then((value) {
-            if (value != null) {
-              provider.navigateTo(value, ship);
-            }
-          }),
         ),
       );
     });

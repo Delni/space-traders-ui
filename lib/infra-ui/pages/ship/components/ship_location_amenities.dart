@@ -9,11 +9,13 @@ import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 class ShipLocationAmenities extends StatelessWidget {
   final Ship ship;
   final Future<Cooldown> Function() onExtract;
+  final Future Function() onNavigate;
 
   const ShipLocationAmenities({
     super.key,
     required this.ship,
     required this.onExtract,
+    required this.onNavigate,
   });
 
   @override
@@ -49,6 +51,7 @@ class ShipLocationAmenities extends StatelessWidget {
                 ],
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Padding(
@@ -61,13 +64,26 @@ class ShipLocationAmenities extends StatelessWidget {
                             child: Center(child: Text("In Orbit")),
                           ),
                           if (waypoint.isExtractable)
-                            ButtonWithCoolDown(
-                              onPressed: ship.inOrbit ? onExtract : null,
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ButtonWithCoolDown(
+                                onPressed: ship.inOrbit ? onExtract : null,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Text("Extract"),
+                                ),
+                              ),
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: OutlinedButton(
+                              onPressed: ship.inOrbit ? onNavigate : null,
                               child: const Padding(
                                 padding: EdgeInsets.all(12.0),
-                                child: Text("Extract"),
+                                child: Text("Navigate"),
                               ),
-                            )
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -83,16 +99,19 @@ class ShipLocationAmenities extends StatelessWidget {
                             child: Center(child: Text("On Docks")),
                           ),
                           if (waypoint.hasMarketplace)
-                            OutlinedButton(
-                              onPressed: ship.isDocked
-                                  ? () => Navigator.of(context).pushNamed(
-                                        MarketPlacePage.route,
-                                        arguments: ship,
-                                      )
-                                  : null,
-                              child: const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: Text("Access Market"),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: OutlinedButton(
+                                onPressed: ship.isDocked
+                                    ? () => Navigator.of(context).pushNamed(
+                                          MarketPlacePage.route,
+                                          arguments: ship,
+                                        )
+                                    : null,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Text("Access Market"),
+                                ),
                               ),
                             ),
                         ],
