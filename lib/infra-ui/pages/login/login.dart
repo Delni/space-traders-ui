@@ -12,18 +12,25 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Text(
-                  "Space Traders",
-                  style: Theme.of(context).textTheme.displayLarge,
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 75.0),
+                    child: Text(
+                      "Space Traders",
+                      style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                          fontSize: MediaQuery.of(context).size.width / 6),
+                    ),
+                  ),
                 ),
-              ),
-              const LoginField(),
-              const SignUp(),
-            ],
+                const LoginField(),
+                const SignUp(),
+              ],
+            ),
           ),
           Positioned(
             bottom: MediaQuery.of(context).size.height * .025,

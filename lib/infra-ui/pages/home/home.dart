@@ -12,15 +12,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        toolbarHeight: 75,
         title: Consumer<AgentProvider>(
           builder: (context, value, child) => AgentBanner(agent: value.agent),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: const [
             Fleet(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:space_traders/infra-ui/components/section_header.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship_summary.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 
@@ -16,10 +17,7 @@ class Fleet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Your fleet",
-            style: Theme.of(ctx).textTheme.headlineLarge,
-          ),
+          const SectionHeader(title: "Your fleet"),
           if (!provider.initialized) const LinearProgressIndicator(),
           ...provider.fleet.take(5).map((ship) => ShipSummary(ship: ship))
         ],

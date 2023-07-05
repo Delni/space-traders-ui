@@ -33,7 +33,7 @@ class _LoginFieldState extends State<LoginField> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: max(400, MediaQuery.of(context).size.width / 2),
+      width: max(270, MediaQuery.of(context).size.width / 2),
       height: 70,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

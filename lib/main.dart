@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/infra-ui/pages/home/home.dart';
 import 'package:space_traders/infra-ui/pages/login/login.dart';
@@ -11,8 +12,10 @@ import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 
 import 'infra-ui/components/pallette.dart';
 
-void main() {
+void main() async {
   runApp(const MainApp());
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 }
 
 Map<String, WidgetBuilder> routes = {
@@ -61,7 +64,8 @@ class MainApp extends StatelessWidget {
           ),
           appBarTheme: const AppBarTheme(
             elevation: 0,
-            backgroundColor: transparentWhite,
+            backgroundColor: Colors.transparent,
+            toolbarHeight: 75,
             shape: BeveledRectangleBorder(
               borderRadius: BorderRadiusDirectional.only(
                 bottomStart: Radius.circular(10),

@@ -89,7 +89,7 @@ class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 5,
+                height: MediaQuery.of(context).size.height / 4,
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   controller: controller,
