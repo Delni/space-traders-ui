@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:space_traders/domain/server-status/status.dart';
+import 'package:space_traders/infra-ui/components/mixins/duration_to_string.mixin.dart';
 
 class NextResetCountdown extends StatefulWidget {
   final AsyncSnapshot<ServerStatus> snapshot;
@@ -11,7 +12,8 @@ class NextResetCountdown extends StatefulWidget {
   State<NextResetCountdown> createState() => _NextResetCountdownState();
 }
 
-class _NextResetCountdownState extends State<NextResetCountdown> {
+class _NextResetCountdownState extends State<NextResetCountdown>
+    with DurationToString {
   late Timer timer;
 
   @override
@@ -39,18 +41,5 @@ class _NextResetCountdownState extends State<NextResetCountdown> {
     final diff = widget.snapshot.data!.nextReset.difference(DateTime.now());
     final next = timeDiffToString(diff);
     return Center(child: Text("Next reset in $next"));
-  }
-
-  String timeDiffToString(Duration duration) {
-    final days = duration.inDays;
-    final hours = duration.inHours - duration.inDays * 24;
-    final minutes = duration.inMinutes - duration.inHours * 60;
-    final seconds = duration.inSeconds - duration.inMinutes * 60;
-    return [
-      if (days > 0) "$days days and",
-      if (hours > 0) "$hours hours",
-      if (minutes > 0) "$minutes min",
-      if (seconds > 0) "$seconds s",
-    ].join(" ");
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/infra-ui/pages/home/agent_banner.dart';
+import 'package:space_traders/infra-ui/pages/home/contracts.dart';
 import 'package:space_traders/infra-ui/pages/home/fleet.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 
@@ -21,6 +22,7 @@ class HomePage extends StatelessWidget {
         child: ListView(
           children: const [
             Fleet(),
+            Contracts(),
           ],
         ),
       ),
