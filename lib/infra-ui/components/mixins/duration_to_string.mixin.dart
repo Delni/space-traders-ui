@@ -5,7 +5,8 @@ mixin DurationToString {
     final minutes = duration.inMinutes - duration.inHours * 60;
     final seconds = duration.inSeconds - duration.inMinutes * 60;
     return [
-      if (days > 0) "$days days and",
+      if (days > 0) "$days days",
+      if (days > 0 && hours > 0) "and",
       if (hours > 0) "$hours hours",
       if (minutes > 0 && days == 0) "$minutes min",
       if (seconds > 0 && days == 0) "$seconds s",
