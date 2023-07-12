@@ -63,6 +63,9 @@ class Waypoint {
   bool get hasMarketplace => traits.any(
         (e) => e.symbol == WaypointTraitSymbol.MARKETPLACE,
       );
+  bool get hasShipyard => traits.any(
+        (e) => e.symbol == WaypointTraitSymbol.SHIPYARD,
+      );
   bool get isExtractable => {WaypointType.asteroidField}.contains(type);
 
   factory Waypoint.fromJson(Map<String, dynamic> json) => Waypoint(

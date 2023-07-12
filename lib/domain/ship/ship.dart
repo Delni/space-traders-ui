@@ -50,6 +50,7 @@ class Ship extends Entity {
 
   bool get isDocked => nav.status == ShipStatus.docked;
   bool get inOrbit => nav.status == ShipStatus.inOrbit;
+  bool get inTransit => nav.status == ShipStatus.inTransit;
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,

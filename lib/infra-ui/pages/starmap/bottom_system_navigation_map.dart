@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/infra-ui/components/pallette.dart';
-import 'package:space_traders/infra-ui/pages/starmap/waypoint_tile.dart';
+import 'package:space_traders/infra-ui/components/section_header.dart';
+import 'package:space_traders/infra-ui/pages/starmap/waypoint/waypoint_tile.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 
 import 'system_map.dart';
@@ -98,10 +99,7 @@ class _SystemNavigationMapState extends State<SystemNavigationMap> {
                   : const LinearProgressIndicator(),
             ),
           ),
-          Text(
-            "System Map",
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          const SectionHeader(title: "System Map"),
           if (system != null)
             Expanded(
               child: ListView.builder(
