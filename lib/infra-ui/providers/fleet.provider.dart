@@ -77,15 +77,18 @@ class FleetProvider extends ChangeNotifier {
         notifyListeners();
       });
 
-  Future<void> orbitOrDock(Ship ship) => Adapters.shipAdapter
-      .orbitOrDock(
-        ship: ship,
-        waypointSymbol: ship.nav.waypointSymbol,
-        to: ship.nav.status == ShipStatus.docked
-            ? ShipStatus.inOrbit
-            : ShipStatus.docked,
-      )
-      .then((value) => fleet[indexOf(ship)].copyWith(nav: value))
-      .then(_update(ship))
-      .then((value) => notifyListeners());
+  Future<ShipStatus> orbitOrDock(Ship ship) => Adapters.shipAdapter
+          .orbitOrDock(
+            ship: ship,
+            waypointSymbol: ship.nav.waypointSymbol,
+            to: ship.nav.status == ShipStatus.docked
+                ? ShipStatus.inOrbit
+                : ShipStatus.docked,
+          )
+          .then((value) => fleet[indexOf(ship)].copyWith(nav: value))
+          .then(_update(ship))
+          .then((value) {
+        notifyListeners();
+        return value.nav.status;
+      });
 }

@@ -11,7 +11,7 @@ import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 
 class ShipLocationAmenities extends StatefulWidget {
   final Ship ship;
-  final Future Function() onOrbitOrDock;
+  final Future<ShipStatus> Function() onOrbitOrDock;
   final Future<Cooldown> Function() onExtract;
   final Future Function() onNavigate;
 
@@ -32,16 +32,19 @@ class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
 
   @override
   void initState() {
-    Timer(const Duration(milliseconds: 10), updatePage);
     super.initState();
+    Timer(
+      const Duration(milliseconds: 100),
+      () => updatePage(widget.ship.nav.status),
+    );
   }
 
-  void updatePage() {
-    setState(() {
-      controller.animateToPage(widget.ship.isDocked ? 0 : 1,
+  void updatePage(ShipStatus status) {
+    controller.animateToPage(
+      status == ShipStatus.docked ? 1 : 0,
           duration: const Duration(milliseconds: 250),
-          curve: Curves.easeOutSine);
-    });
+      curve: Curves.easeOutSine,
+    );
   }
 
   @override
@@ -50,7 +53,7 @@ class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
       final orbitOrDockButton = Padding(
         padding: const EdgeInsets.all(5.0),
         child: FutureButton(
-          onPressed: () => widget.onOrbitOrDock().then((value) => updatePage()),
+          onPressed: () => widget.onOrbitOrDock().then(updatePage),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Text(
@@ -88,8 +91,7 @@ class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
                   Text(widget.ship.nav.status.label),
                 ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 4,
+              Expanded(
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   controller: controller,

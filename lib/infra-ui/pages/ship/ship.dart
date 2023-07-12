@@ -43,18 +43,20 @@ class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
                   Expanded(child: Container()),
                   ShipStatusSummary(shipSymbol: shipSymbol),
                   const SectionHeader(title: 'Location'),
-                  ShipLocationAmenities(
-                    ship: ship,
-                    onOrbitOrDock: () => provider.orbitOrDock(ship),
-                    onExtract: () => provider.extract(ship),
-                    onNavigate: () => showBottomSystemNavigationMap(
-                      context,
-                      ship.nav.systemSymbol,
-                    ).then((value) {
-                      if (value != null) {
-                        provider.navigateTo(value, ship);
-                      }
-                    }),
+                  Expanded(
+                    child: ShipLocationAmenities(
+                      ship: ship,
+                      onOrbitOrDock: () => provider.orbitOrDock(ship),
+                      onExtract: () => provider.extract(ship),
+                      onNavigate: () => showBottomSystemNavigationMap(
+                        context,
+                        ship.nav.systemSymbol,
+                      ).then((value) {
+                        if (value != null) {
+                          provider.navigateTo(value, ship);
+                        }
+                      }),
+                    ),
                   )
                 ],
               ),

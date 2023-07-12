@@ -42,7 +42,7 @@ class ShipGaugeInfo extends StatelessWidget {
                           child: AspectRatio(
                             aspectRatio: 1,
                             child: CircularProgressIndicator(
-                              value: units / max(capacity, 1),
+                              value: capacity == 0 ? 1 : units / capacity,
                               strokeWidth:
                                   MediaQuery.of(context).size.width / 125,
                             ),
