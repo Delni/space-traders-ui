@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/components/ship_icon.dart';
+import 'package:space_traders/infra-ui/pages/ship/components/ship_transit_row.dart';
 
 import './ship.dart';
 
@@ -21,10 +22,7 @@ class ShipSummary extends StatelessWidget {
           opacity: 0.5,
         ),
         title: Hero(tag: ValueKey(ship.symbol), child: Text(ship.symbol)),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: navRow,
-        ),
+        subtitle: navRow,
         // trailing: Text(ship.frame.symbol.name),
         onTap: () => Navigator.of(context).pushNamed(
           ShipPage.route,
@@ -34,32 +32,19 @@ class ShipSummary extends StatelessWidget {
     );
   }
 
-  List<Widget> get navRow {
+  Widget get navRow {
     return switch (ship.nav.status) {
-      ShipStatus.docked => [
+      ShipStatus.docked =>
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(ship.nav.waypointSymbol),
           const Text('DOCKED'),
-        ],
-      ShipStatus.inTransit => [
-          Text(ship.nav.route.departure.symbol),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LinearProgressIndicator(
-                value: durationSinceDepartureTo(DateTime.now().toUtc()) /
-                    durationSinceDepartureTo(ship.nav.route.arrival),
-              ),
-            ),
-          ),
-          Text(ship.nav.route.destination.symbol),
-        ],
-      ShipStatus.inOrbit => [
+        ]),
+      ShipStatus.inTransit => ShipTransitRow(route: ship.nav.route),
+      ShipStatus.inOrbit =>
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(ship.nav.waypointSymbol),
           const Text('IN ORBIT'),
-        ],
+        ]),
     };
   }
-
-  int durationSinceDepartureTo(DateTime time) =>
-      time.difference(ship.nav.route.departureTime).inMicroseconds;
 }
