@@ -1,4 +1,5 @@
 import 'package:space_traders/domain/agent.dart';
+import 'package:space_traders/domain/contract/contract.dart';
 
 class AgentInMemoryAdapter implements AgentRepository {
   @override
@@ -8,4 +9,14 @@ class AgentInMemoryAdapter implements AgentRepository {
         headquarters: "HQ",
         symbol: "Starlord",
       ));
+
+  @override
+  Future<Contract> accept(Contract contract) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Iterable<Contract>> getMyContracts() {
+    throw UnimplementedError();
+  }
 }
