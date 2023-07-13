@@ -6,7 +6,8 @@ abstract class NavigationRepository {
 
   Future<System> getSystem(String systemSymbol);
 
-  Future<List<Map<String, dynamic>>> getRawWaypoints(String systemSymbol);
+  Future<Iterable<Map<String, dynamic>>> getRawWaypoints(String systemSymbol);
 
   Future<Market?> findMarket(String waypointSymbol);
+  Future<Iterable<PurchasableShip>?> findShipyard(String waypointSymbol);
 }

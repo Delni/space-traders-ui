@@ -6,6 +6,7 @@ import 'package:space_traders/infra-ui/pages/login/login.dart';
 import 'package:space_traders/infra-ui/pages/ship/components/cargo/ship_cargo.page.dart';
 import 'package:space_traders/infra-ui/pages/ship/ship.dart';
 import 'package:space_traders/infra-ui/pages/starmap/market_place.dart';
+import 'package:space_traders/infra-ui/pages/starmap/shipyard.dart';
 import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
@@ -23,6 +24,7 @@ Map<String, WidgetBuilder> routes = {
   ShipPage.route: (context) => const ShipPage(),
   ShipCargoPage.route: (context) => const ShipCargoPage(),
   MarketPlacePage.route: (context) => const MarketPlacePage(),
+  ShipyardPage.route: (context) => const ShipyardPage(),
 };
 
 class MainApp extends StatelessWidget {

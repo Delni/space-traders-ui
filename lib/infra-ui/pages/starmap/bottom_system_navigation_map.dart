@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_traders/domain/navigation.dart';
-import 'package:space_traders/infra-ui/components/pallette.dart';
+import 'package:space_traders/infra-ui/components/bottom_sheet_wrapper.dart';
 import 'package:space_traders/infra-ui/components/section_header.dart';
 import 'package:space_traders/infra-ui/pages/starmap/waypoint/waypoint_tile.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
@@ -20,17 +19,10 @@ Future<NavPoint?> showBottomSystemNavigationMap(
       context: context,
       builder: (context) =>
           Consumer<StarMapProvider>(
-        builder: (context, provider, _) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Card(
-            color: lightWhite.withOpacity(0.1),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-              child: SystemNavigationMap(
-                futureSystem: provider.get(systemSymbol),
-                onNavigate: (navpoint) => Navigator.of(context).pop(navpoint),
-              ),
-            ),
+        builder: (context, provider, _) => BottomSheetWrapper(
+          child: SystemNavigationMap(
+            futureSystem: provider.get(systemSymbol),
+            onNavigate: (navpoint) => Navigator.of(context).pop(navpoint),
           ),
         ),
       ),

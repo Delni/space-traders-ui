@@ -49,7 +49,7 @@ class ShipFrame {
         moduleSlots: json["moduleSlots"],
         mountingPoints: json["mountingPoints"],
         fuelCapacity: json["fuelCapacity"],
-        condition: json["condition"],
+        condition: json["condition"] ?? 0,
         requirements: EngineRequirements.fromJson(json["requirements"]),
       );
 

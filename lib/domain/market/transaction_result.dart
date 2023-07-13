@@ -4,7 +4,7 @@ import 'package:space_traders/domain/ship.dart';
 
 class TransactionResult extends WithCargo {
   final Agent agent;
-  final Transaction transaction;
+  final GoodTransaction transaction;
 
   TransactionResult({
     required this.agent,
@@ -16,12 +16,6 @@ class TransactionResult extends WithCargo {
       TransactionResult(
         agent: Agent.fromJson(json["agent"]),
         cargo: Cargo.fromJson(json["cargo"]),
-        transaction: Transaction.fromJson(json["transaction"]),
+        transaction: GoodTransaction.fromJson(json["transaction"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "agent": agent.toJson(),
-        "cargo": cargo.toJson(),
-        "transaction": transaction.toJson(),
-      };
 }

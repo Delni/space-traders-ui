@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:space_traders/domain/entity.dart';
+import 'package:space_traders/domain/market.dart';
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
@@ -91,4 +92,12 @@ class FleetProvider extends ChangeNotifier {
         notifyListeners();
         return value.nav.status;
       });
+
+  Future<int> purchaseShip(PurchasableShip ship, String waypointSymbol) =>
+      Adapters.shipAdapter
+          .purchaseShip(ship: ship, waypointSymbol: waypointSymbol)
+          .then((value) {
+        _fleet?.add(value.ship);
+        return value;
+      }).then((value) => value.transaction.price * -1);
 }

@@ -30,13 +30,4 @@ class Market {
           json["tradeGoods"].map((x) => TradeGood.fromJson(x)),
         ),
       );
-
-  Map<String, dynamic> toJson() => {
-        "symbol": symbol,
-        // "imports": List<dynamic>.from(imports.map((x) => x)),
-        // "exports": List<dynamic>.from(exports.map((x) => x)),
-        // "exchange": List<dynamic>.from(exchange.map((x) => x.toJson())),
-        "transactions": List<dynamic>.from(transactions.map((x) => x.toJson())),
-        "tradeGoods": List<dynamic>.from(tradeGoods.map((x) => x.toJson())),
-      };
 }

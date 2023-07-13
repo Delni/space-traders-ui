@@ -90,4 +90,16 @@ class ShipHttpAdapter extends ShipRepository {
         "/my/ships/${ship.symbol}/refuel",
         data: {"waypointSymbol": waypointSymbol},
       ).then((value) => Fuel.fromJson(value.data['data']['fuel']));
+      
+  @override
+  Future<ShipTransactionResult> purchaseShip(
+          {required PurchasableShip ship, required String waypointSymbol}) =>
+      httpClient.post(
+        "/my/ships",
+        data: {
+          "waypointSymbol": waypointSymbol,
+          "shipType": ship.type.name,
+        },
+      ).then((value) => ShipTransactionResult.fromJson(value.data['data']));
+      
 }

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:space_traders/domain/market/market.dart';
+import 'package:space_traders/domain/market.dart';
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/domain/navigation/waypoint_trait.dart';
 import 'package:space_traders/infra-ui/adapters.dart';
@@ -30,8 +30,11 @@ class StarMapProvider extends ChangeNotifier {
   Future<Market?> findMarket(String waypointSymbol) =>
       Adapters.navigationAdapter.findMarket(waypointSymbol);
 
+  Future<Iterable<PurchasableShip>?> findShipyard(String waypointSymbol) =>
+      Adapters.navigationAdapter.findShipyard(waypointSymbol);
+
   Future<System> _enrichSystemWaypoints(System system) async {
-    List<Map<String, dynamic>> rawWaypoints =
+    Iterable<Map<String, dynamic>> rawWaypoints =
         await Adapters.navigationAdapter.getRawWaypoints(system.symbol);
 
     Iterable<String> children = rawWaypoints
@@ -56,7 +59,7 @@ class StarMapProvider extends ChangeNotifier {
   }
 
   Iterable<Waypoint> _buildOrbitalsFrom(
-    List<RawDTO> rawWaypoints, {
+    Iterable<RawDTO> rawWaypoints, {
     required String waypointSymbol,
     required List<Waypoint> waypoints,
   }) =>
@@ -67,14 +70,14 @@ class StarMapProvider extends ChangeNotifier {
               ));
 
   Iterable<WaypointTrait> _buildTraitsFrom(
-    List<RawDTO> rawWaypoints, {
+    Iterable<RawDTO> rawWaypoints, {
     required String waypointSymbol,
   }) =>
       List.from(_getRawFor(waypointSymbol)(rawWaypoints)['traits'])
           .map((trait) => WaypointTrait.fromJson(trait));
 
-  RawDTO Function(List<RawDTO>) _getRawFor(String waypointSymbol) =>
-      (List<RawDTO> rawWaypoints) => rawWaypoints.firstWhere(
+  RawDTO Function(Iterable<RawDTO>) _getRawFor(String waypointSymbol) =>
+      (Iterable<RawDTO> rawWaypoints) => rawWaypoints.firstWhere(
             (element) => element['symbol'] == waypointSymbol,
           );
 }

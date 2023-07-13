@@ -1,7 +1,7 @@
+import 'package:space_traders/domain/market.dart';
 import 'package:space_traders/domain/navigation.dart';
 import 'package:space_traders/domain/ship.dart';
 import 'package:space_traders/domain/ship/fuel.dart';
-import 'package:space_traders/domain/market/transaction_result.dart';
 
 abstract class ShipRepository {
   const ShipRepository();
@@ -36,6 +36,11 @@ abstract class ShipRepository {
     required Ship ship,
     required String waypointSymbol,
     required ShipStatus to,
+  });
+
+  Future<ShipTransactionResult> purchaseShip({
+    required PurchasableShip ship,
+    required String waypointSymbol,
   });
 
   Future<NavigationResult> navigateTo({
