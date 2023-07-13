@@ -13,7 +13,7 @@ class Countdown extends StatefulWidget {
   State<Countdown> createState() => _CountdownState();
 }
 
-class _CountdownState extends State<Countdown> with DurationToString {
+class _CountdownState extends State<Countdown> with TimeDiffMixin {
   late Timer timer;
   late Duration remaining;
 

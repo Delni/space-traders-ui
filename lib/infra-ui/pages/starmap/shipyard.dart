@@ -10,7 +10,7 @@ import 'package:space_traders/infra-ui/providers/agent.provider.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 
-class ShipyardPage extends StatelessWidget with RouteArgs<String> {
+class ShipyardPage extends StatelessWidget with RouteArgsMixin<String> {
   static const route = "/shipyard";
   const ShipyardPage({super.key});
 

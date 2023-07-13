@@ -17,7 +17,7 @@ class ShipPageArguments {
   ShipPageArguments({required this.ship});
 }
 
-class ShipPage extends StatelessWidget with RouteArgs<ShipPageArguments> {
+class ShipPage extends StatelessWidget with RouteArgsMixin<ShipPageArguments> {
   static const route = "/ships/details";
 
   const ShipPage({super.key});

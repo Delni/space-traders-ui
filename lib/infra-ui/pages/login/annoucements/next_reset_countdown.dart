@@ -13,7 +13,7 @@ class NextResetCountdown extends StatefulWidget {
 }
 
 class _NextResetCountdownState extends State<NextResetCountdown>
-    with DurationToString {
+    with TimeDiffMixin {
   late Timer timer;
 
   @override

@@ -1,4 +1,4 @@
-mixin DurationToString {
+mixin TimeDiffMixin {
   String timeDiffToString(Duration duration) {
     final days = duration.inDays;
     final hours = duration.inHours - duration.inDays * 24;
@@ -12,4 +12,7 @@ mixin DurationToString {
       if (seconds > 0 && days == 0) "$seconds s",
     ].join(" ");
   }
+
+  Duration timeDiff({required DateTime from, required DateTime to}) =>
+      to.difference(from);
 }

@@ -14,7 +14,7 @@ import 'package:space_traders/infra-ui/providers/starmap.provider.dart';
 
 import '../../components/good_exchange_sheet.dart';
 
-class MarketPlacePage extends StatelessWidget with RouteArgs<Ship> {
+class MarketPlacePage extends StatelessWidget with RouteArgsMixin<Ship> {
   static const route = "/market";
   const MarketPlacePage({super.key});
 

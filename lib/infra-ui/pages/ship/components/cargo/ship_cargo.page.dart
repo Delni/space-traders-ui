@@ -6,7 +6,7 @@ import 'package:space_traders/infra-ui/components/mixins/route_args.mixin.dart';
 import 'package:space_traders/infra-ui/pages/ship/components/cargo/ship_cargo_column.dart';
 import 'package:space_traders/infra-ui/providers/fleet.provider.dart';
 
-class ShipCargoPage extends StatelessWidget with RouteArgs<String> {
+class ShipCargoPage extends StatelessWidget with RouteArgsMixin<String> {
   static const route = "/ship/cargo";
 
   const ShipCargoPage({super.key});
