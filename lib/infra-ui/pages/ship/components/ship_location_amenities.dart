@@ -31,11 +31,13 @@ class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
   PageController controller = PageController(initialPage: 0);
 
   void updatePage(ShipStatus status) {
-    controller.animateToPage(
-      status == ShipStatus.docked ? 1 : 0,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOutSine,
-    );
+    if (controller.positions.isNotEmpty) {
+      controller.animateToPage(
+        status == ShipStatus.docked ? 1 : 0,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOutSine,
+      );
+    }
   }
 
   void delayUpdatePage() {
