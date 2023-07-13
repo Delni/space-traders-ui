@@ -1,19 +1,19 @@
 import 'navpoint.dart';
 
-class Route {
+class NavRoute {
     final NavPoint departure;
     final NavPoint destination;
     final DateTime arrival;
     final DateTime departureTime;
 
-    Route({
+  NavRoute({
         required this.departure,
         required this.destination,
         required this.arrival,
         required this.departureTime,
     });
 
-    factory Route.fromJson(Map<String, dynamic> json) => Route(
+  factory NavRoute.fromJson(Map<String, dynamic> json) => NavRoute(
         departure: NavPoint.fromJson(json["departure"]),
         destination: NavPoint.fromJson(json["destination"]),
         arrival: DateTime.parse(json["arrival"]),

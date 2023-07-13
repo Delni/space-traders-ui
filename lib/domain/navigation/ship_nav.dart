@@ -7,7 +7,7 @@ import 'route.dart';
 class ShipNav {
   final String systemSymbol;
   final String waypointSymbol;
-  final Route route;
+  final NavRoute route;
   final ShipStatus status;
   final FlightMode flightMode;
 
@@ -22,7 +22,7 @@ class ShipNav {
   factory ShipNav.fromJson(Map<String, dynamic> json) => ShipNav(
         systemSymbol: json["systemSymbol"],
         waypointSymbol: json["waypointSymbol"],
-        route: Route.fromJson(json["route"]),
+        route: NavRoute.fromJson(json["route"]),
         status: ShipStatusMatcher.fromString(json["status"]),
         flightMode: FlightModeMatcher.fromString(json["flightMode"]),
       );
@@ -38,7 +38,7 @@ class ShipNav {
   ShipNav copyWith({
     String? systemSymbol,
     String? waypointSymbol,
-    Route? route,
+    NavRoute? route,
     ShipStatus? status,
     FlightMode? flightMode,
   }) =>
