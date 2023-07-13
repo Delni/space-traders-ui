@@ -30,20 +30,18 @@ class ShipLocationAmenities extends StatefulWidget {
 class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
   PageController controller = PageController(initialPage: 0);
 
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(milliseconds: 100),
-      () => updatePage(widget.ship.nav.status),
-    );
-  }
-
   void updatePage(ShipStatus status) {
     controller.animateToPage(
       status == ShipStatus.docked ? 1 : 0,
-          duration: const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
       curve: Curves.easeOutSine,
+    );
+  }
+
+  void delayUpdatePage() {
+    Timer(
+      const Duration(milliseconds: 10),
+      () => updatePage(widget.ship.nav.status),
     );
   }
 
@@ -63,14 +61,15 @@ class _ShipLocationAmenitiesState extends State<ShipLocationAmenities> {
         ),
       );
       return FutureBuilder(
-        future: provider.getWaypoint(widget.ship.nav.waypointSymbol),
+        future: provider
+            .getWaypoint(widget.ship.nav.waypointSymbol)
+            .then((value) => value)
+          ..whenComplete(delayUpdatePage),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            return const LinearProgressIndicator();
-          }
           final waypoint = snapshot.data;
-          if (waypoint == null) {
-            return const LinearProgressIndicator();
+          if (snapshot.connectionState == ConnectionState.active ||
+              waypoint == null) {
+            return const Column(children: [LinearProgressIndicator()]);
           }
           return Column(
             children: [
