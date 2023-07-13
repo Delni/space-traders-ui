@@ -19,7 +19,7 @@ class Fleet extends StatelessWidget {
         children: [
           const SectionHeader(title: "Your fleet"),
           if (!provider.initialized) const LinearProgressIndicator(),
-          ...provider.fleet.take(5).map((ship) => ShipSummary(ship: ship))
+          ...provider.fleet.take(6).map((ship) => ShipSummary(ship: ship))
         ],
       );
     });
